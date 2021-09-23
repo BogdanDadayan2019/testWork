@@ -5,14 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="98*"/>
+            <ColumnDefinition Width="703*"/>
+        </Grid.ColumnDefinitions>
 
-        <TabControl x:Name="maintable">
+        <TabControl x:Name="maintable" Grid.ColumnSpan="2">
             <TabItem x:Name="GoodsTab">
+
+                <DataGrid x:Name="goodsGrid" Height="398" AutoGenerateColumns="False" Margin="192,0,-1,0">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
+                        <DataGridTextColumn Binding="{Binding CATEGORY_NAME}" Header="Тип товара"/>
+                        <DataGridTextColumn Binding="{Binding GOODS_PRICE}" Header="Цена"/>
+                        <DataGridTextColumn Binding="{Binding GOODS_DESCRIPTION}" Header="Описание товара"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" Width="368">
                         <TextBlock Margin="3" TextAlignment="Center" Width="355"><Run Text="Goods"/></TextBlock>
+
                     </StackPanel>
                 </TabItem.Header>
 
@@ -26,19 +43,6 @@
                 </TabItem.Header>
             </TabItem>
         </TabControl>
-        <StackPanel Margin="0,31,87,0">
-            <DataGrid x:Name="goodsGrid" Height="160" AutoGenerateColumns="False" Width="709">
-                <DataGrid.Columns>
-              
-                    <DataGridTextColumn Binding="{Binding CATEGORY_NAME}" Header="Месяц"/>
-                    <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Год"/>
-                    <DataGridTextColumn Binding="{Binding GOODS_PRICE}" Header="Опцион"/>
-                    <DataGridTextColumn Binding="{Binding GOODS_DESCRIPTION}" Header="Страйк"/>
-
-                </DataGrid.Columns>
-            </DataGrid>
-
-        </StackPanel>
 
     </Grid>
 </Window>
