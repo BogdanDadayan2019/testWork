@@ -5,23 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="MainWindow" Height="482" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="98*"/>
-            <ColumnDefinition Width="703*"/>
-        </Grid.ColumnDefinitions>
 
-        <TabControl x:Name="maintable" Grid.ColumnSpan="2">
+        <TabControl x:Name="maintable">
             <TabItem x:Name="GoodsTab">
-
-                <DataGrid x:Name="goodsGrid" Height="398" AutoGenerateColumns="False" Margin="192,0,-1,0">
+                <DataGrid x:Name="goodsGrid" Height="398" AutoGenerateColumns="False" Margin="192,0,-1,0" SelectionChanged="goodsGrid_SelectionChanged">
                     <DataGrid.Columns>
 
                         <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
                         <DataGridTextColumn Binding="{Binding CATEGORY_NAME}" Header="Тип товара"/>
                         <DataGridTextColumn Binding="{Binding GOODS_PRICE}" Header="Цена"/>
                         <DataGridTextColumn Binding="{Binding GOODS_DESCRIPTION}" Header="Описание товара"/>
+                        <DataGridTextColumn Binding="{Binding GOODS_ID}" Header="Id"/>
 
                     </DataGrid.Columns>
                 </DataGrid>
@@ -42,7 +38,27 @@
                     </StackPanel>
                 </TabItem.Header>
             </TabItem>
+
+
         </TabControl>
+
+        <Label x:Name="label1" Content="Название" Margin="0,0,722,246" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="68"/>
+        <Label x:Name="label2" Content="Тип" Margin="0,0,733,217" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="57"/>
+        <Label x:Name="label3" Content="Цена" Margin="0,0,741,187" HorizontalAlignment="Right" Width="49" Height="25" VerticalAlignment="Bottom"/>
+        <Label x:Name="label4" Content="Описание" Margin="0,0,722,156" HorizontalAlignment="Right" Width="68" Height="26" VerticalAlignment="Bottom"/>
+
+        <TextBox x:Name="descrip_goods_txt" Text="" TextWrapping="Wrap" Margin="0,291,606,100" HorizontalAlignment="Right" Width="118"/>
+        <TextBox x:Name="name_goods_txt" Text="" TextWrapping="Wrap"  Margin="0,0,607,250" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="124" Height="17" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="type_goods_txt" Margin="0,0,607,213" HorizontalAlignment="Right" Width="127" Height="22" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="price_goods_txt" Text="" TextWrapping="Wrap"  Margin="0,0,607,187" RenderTransformOrigin="0.5,0.5" Height="21" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="124"/>
+
+
+
+        <Button x:Name="add_btn" Content="Add" Margin="0,0,621,22" HorizontalAlignment="Right" Width="96" Height="63" VerticalAlignment="Bottom" Click="add_btn_Click"/>
+        <Button x:Name="upd_btn" Content="Update" Margin="0,0,722,60" HorizontalAlignment="Right" Width="68" Height="25" VerticalAlignment="Bottom" Click="upd_btn_Click" IsEnabled="False"/>
+        <Button x:Name="delete_btn" Content="Delete" Margin="0,0,722,22" HorizontalAlignment="Right" Width="71" Height="25" VerticalAlignment="Bottom" Click="delete_btn_Click" IsEnabled="False"  />
+        <TextBox x:Name="id_goods_txt" Text="TextBox" TextWrapping="Wrap" Margin="0,173,617,277" HorizontalAlignment="Right" Width="114" IsEnabled="False"/>
+        <Button x:Name="button1" Content="Button" HorizontalAlignment="Right" Margin="0,0,750,100" VerticalAlignment="Bottom" Click="button1_Click"/>
 
     </Grid>
 </Window>
