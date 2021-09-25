@@ -1,0 +1,24 @@
+﻿<Window x:Class="GoodsCheck.ChangeGoods"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoodsCheck"
+        mc:Ignorable="d"
+        Title="ChangeGoods" Height="255" Width="255">
+    <Grid HorizontalAlignment="Center" Width="255" Height="245" VerticalAlignment="Top">
+
+        <Label x:Name="label" Content="Изменить товар" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="110"/>
+        <Label x:Name="namelab" Content="Название:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="pricelab" Content="Цена за 1 шт:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="descriptionlab" Content="Описание:" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="87,50,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
+        <TextBox x:Name="pricetxt" HorizontalAlignment="Left" Margin="87,100,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
+        <TextBox x:Name="descriptiontxt" HorizontalAlignment="Left" Margin="87,129,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" Height="54" FontFamily="Bahnschrift"/>
+        <Button x:Name="button" Content="Изменить" HorizontalAlignment="Left" Margin="87,188,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
+        <TextBox x:Name="idtxt" HorizontalAlignment="Left" Margin="8,188,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" IsEnabled="False" Visibility="Hidden"/>
+        <ComboBox x:Name="typetxt" HorizontalAlignment="Left" Margin="88,73,0,0" VerticalAlignment="Top" Width="144" Height="19"/>
+
+    </Grid>
+</Window>

@@ -21,11 +21,20 @@ namespace GoodsCheck
 
     public partial class MainWindow : Window
     {
+        public delegate void UpdDbCheck();
+        public delegate void UpdDbGoods();
+
+        UpdDbCheck upd1;
+        UpdDbGoods updGoods;
+        DataRowView dr;
 
         OracleConnection con = null;
+        DataTransfer data = new DataTransfer();
 
         public MainWindow()
         {
+            
+           // upd = CheckUpdateDataGrid();
             SetConnection();       
             InitializeComponent();
         }        
@@ -56,7 +65,20 @@ namespace GoodsCheck
             dr.Close();
         }
 
-        private void UpdateComboBox() 
+        public void CheckUpdateDataGrid()
+        {
+            
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "SELECT CHECK_ID, CHECK_DATE, CHECK_STATUS FROM GOODSCHECK2";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            chekGrid.ItemsSource = dt.DefaultView;
+            dr.Close();
+        }
+
+        private void UpdateComboBox()
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = "SELECT CATEGORY_NAME FROM GOODS";
@@ -65,8 +87,8 @@ namespace GoodsCheck
             OracleDataAdapter oracleData = new OracleDataAdapter(cmd);
             oracleData.Fill(dt);
 
-            type_goods_txt.ItemsSource = dt.AsDataView();
-            type_goods_txt.DisplayMemberPath = dt.Columns[0].ToString();
+            //te.ItemsSource = dt.AsDataView();
+            //comboBox.DisplayMemberPath = dt.Columns[0].ToString();
 
             cmd.ExecuteNonQuery();
 
@@ -74,8 +96,13 @@ namespace GoodsCheck
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+           
+            
             UpdateDataGrid();
+            CheckUpdateDataGrid();
             UpdateComboBox();
+
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -86,52 +113,61 @@ namespace GoodsCheck
         private void add_btn_Click(object sender, RoutedEventArgs e)
         {
             String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
-            this.AUD(sql, 0);
-            add_btn.IsEnabled = false;
-            upd_btn.IsEnabled = true;
-            delete_btn.IsEnabled = true;
+            this.AUD(sql, 1);
+            //add_btn.IsEnabled = false;
+            //upd_btn.IsEnabled = true;
+            //delete_btn.IsEnabled = true;
         }
 
         private void upd_btn_Click(object sender, RoutedEventArgs e)
         {
-            String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
-            this.AUD(sql, 1);
+            //  int a = data.a;
+
+            ChangeGoods changeGoods = new ChangeGoods(dr, updGoods);
+            changeGoods.Show();
+
+            // goodsGrid_SelectionChanged(sender, )
+
+            //String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
+            //this.AUD(sql, 1);
         }
       
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             String sql = "DELETE FROM GOODS WHERE GOODS_ID = :GOODS_ID";
-            this.AUD(sql, 2);
+            AUD(sql, 2);
 
         }
 
         private void AUD(String sql_stmt, int state)
         {
+
             String msg = "";
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = sql_stmt;
             cmd.CommandType = CommandType.Text;
+            msg = "Row Deleted Successfully";
 
             switch (state)
             {
                 case 0:
                     msg = "Row Inserted Successfully!";
-                    cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
-                    cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
-                    cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
-                    cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
+                    //cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
                     break;
                 case 1:
                     msg = "Row Updated Successfully!";
-                    cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
-                    cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
-                    cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
-                    cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
-                    cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
+                    //cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
+                    //cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text;
                     break;
                 case 2:
                     msg = "Row Deleted Successfully";
-                    cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text; 
+                    cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 6).Value = id_goods_txt.Text;
                     break;
             }
             try
@@ -150,16 +186,17 @@ namespace GoodsCheck
             }
         }
 
-        private void goodsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void goodsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            updGoods += UpdateDataGrid;
+            updGoods += UpdateComboBox;
+
             DataGrid dg = sender as DataGrid;
-            DataRowView dr = dg.SelectedItem as DataRowView;
+            dr = dg.SelectedItem as DataRowView;
+
             if (dr != null)
             {
-                name_goods_txt.Text = dr["GOODS_NAME"].ToString();
-                type_goods_txt.Text = dr["CATEGORY_NAME"].ToString();
-                price_goods_txt.Text = dr["GOODS_PRICE"].ToString();
-                descrip_goods_txt.Text = dr["GOODS_DESCRIPTION"].ToString();
+
                 id_goods_txt.Text = dr["GOODS_ID"].ToString();
 
                 add_btn.IsEnabled = false;
@@ -169,11 +206,95 @@ namespace GoodsCheck
             }
         }
 
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("1");
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
+            
+           
+        }
+
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            ChangeGoodsWindow changeGoodsWindow = new ChangeGoodsWindow();
 
-            changeGoodsWindow.Show();
+        }
+
+        private void goodsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //ChangeGoods changeGoods = new ChangeGoods();
+            //changeGoods.Show();
+        }
+
+        private void add_check_btn(object sender, RoutedEventArgs e)
+        {
+            upd1 = CheckUpdateDataGrid;
+            CheckWindow check = new CheckWindow(data, upd1);
+            check.Show();
+        }
+
+        private void add_for_check_btn(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void change_check_btn(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void delete_check_btn(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chekGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            DataRowView dr = dg.SelectedItem as DataRowView;
+
+            AddGoodsForCheck changeGoods = new AddGoodsForCheck(dr);
+            changeGoods.Show();
         }
     }
 }
+
+//switch (state)
+//{
+//    case 0:
+//        msg = "Row Inserted Successfully!";
+//        cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
+//        cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
+//        cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
+//        cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
+//        break;
+//    case 1:
+//        msg = "Row Updated Successfully!";
+//        cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
+//        cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
+//        cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
+//        cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
+//        cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text;
+//        break;
+//    case 2:
+//        msg = "Row Deleted Successfully";
+//        cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text; 
+//        break;
+//}
+//try
+//{
+//    int n = cmd.ExecuteNonQuery();
+//    if (n > 0)
+//    {
+//        MessageBox.Show(msg);
+//        this.UpdateDataGrid();
+//    }
+//}
+//catch (Exception)
+//{
+
+//    throw;
+//}
