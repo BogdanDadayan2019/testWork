@@ -14,23 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GoodsCheck
+namespace GoodsCheck.ViewGoods
 {
     /// <summary>
-    /// Логика взаимодействия для ChangeGoodsWindow.xaml
+    /// Логика взаимодействия для AddGoods.xaml
     /// </summary>
-    public partial class CheckWindow : Window
+    public partial class AddGoods : Window
     {
         OracleConnection con = null;
-        private MainWindow.UpdDbCheck _upd1;
-        DataTransfer data;
+        MainWindow.UpdDbCheck upd1;
 
-        public CheckWindow(DataTransfer data, MainWindow.UpdDbCheck upd1)
+        public AddGoods(MainWindow.UpdDbCheck upd1)
         {
-            this.data = data;
-            _upd1 = upd1;
+            this.upd1 = upd1;
             SetConnection();
-
             InitializeComponent();
         }
 
@@ -48,19 +45,12 @@ namespace GoodsCheck
             }
         }
 
-        private void upd_btn_Click(object sender, RoutedEventArgs e)
+        private void change_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void add_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //  data.a = 20;
-            String sql = "INSERT INTO GOODSCHECK2 (CHECK_ID, CHECK_DATE, CHECK_STATUS) VALUES(:CHECK_ID, :CHECK_DATE, :CHECK_STATUS)";
+            String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
             this.AUD(sql);
-            _upd1();
+            upd1();
         }
-
 
         private void AUD(String sql_stmt)
         {
@@ -70,9 +60,11 @@ namespace GoodsCheck
             cmd.CommandType = CommandType.Text;
 
             msg = "Row Inserted Successfully!";
-            cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Text;
-            cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 7).Value = time_check_txt.SelectedDate;
-            cmd.Parameters.Add("CHECK_STATUS", OracleDbType.Varchar2, 6).Value = status_check_txt.Text;
+            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
+            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
+            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Varchar2, 25).Value = pricetxt.Text;
+            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Int32, 6).Value = desctxt.Text;
+
 
             try
             {
@@ -90,5 +82,6 @@ namespace GoodsCheck
             }
         }
 
+       
     }
 }

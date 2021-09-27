@@ -1,0 +1,20 @@
+﻿<Window x:Class="GoodsCheck.ViewCheck.ChangeCheck"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoodsCheck.ViewCheck"
+        mc:Ignorable="d"
+        Title="ChangeCheck" Height="237" Width="308">
+    <Grid>
+        <Label x:Name="label" Content="Изменить чек" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="88"/>
+        <Label x:Name="namelab" Content="Номер:" HorizontalAlignment="Left" Margin="40,66,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="40,90,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="pricelab" Content="Статус:" HorizontalAlignment="Left" Margin="40,116,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="117,69,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift" IsEnabled="False"/>
+        <TextBox x:Name="statustxt" HorizontalAlignment="Left" Margin="117,119,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift" Height="21"/>
+        <Button x:Name="button" Content="Изменить" HorizontalAlignment="Left" Margin="117,168,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
+        <DatePicker x:Name="timetxt" HorizontalAlignment="Left" Margin="117,90,0,0" VerticalAlignment="Top" Width="145"/>
+
+    </Grid>
+</Window>

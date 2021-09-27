@@ -27,12 +27,21 @@ namespace GoodsCheck
         {
             SetConnection();
             InitializeComponent();
-
-            if (dr != null)
+            try
             {
-                id_check_txt.Text = dr["CHECK_ID"].ToString();
+                
+                if (dr != null)
+                {
+                    id_check_txt.Content = dr["CHECK_ID"].ToString();
 
+                }
             }
+            catch (Exception)
+            {
+                String msg = "Выберите чек";
+                MessageBox.Show(msg);
+            }
+            
         }
 
         private void SetConnection()
@@ -50,15 +59,13 @@ namespace GoodsCheck
         }
 
         private void add_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //  data.a = 20;
-            
+        {           
             
         }
 
         private void change_Click(object sender, RoutedEventArgs e)
         {
-            //  String sql = "insert into goodscheck2 (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE) select GOODS_NAME, CATEGORY_NAME, GOODS_PRICE from goods";
+           
             String sql = "INSERT INTO GOODSCHECK2 (CHECK_ID, CATEGORY_NAME, GOODS_NAME, GOODS_PRICE) VALUES(:CHECK_ID, :CATEGORY_NAME, :GOODS_NAME, :GOODS_PRICE)";
             this.AUD(sql);
         }
@@ -71,7 +78,7 @@ namespace GoodsCheck
             cmd.CommandType = CommandType.Text;
 
             msg = "Row Inserted Successfully!";
-            cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Text;
+            cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Content;
             cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
             cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
             cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = pricetxt.Text;

@@ -7,27 +7,57 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AddGoodsForCheck.xaml.cs">
+    <Compile Update="ViewCheck\AddGoodsForCheck.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ChangeGoods.xaml.cs">
+    <Compile Update="ViewCheck\ChangeCheck.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CheckWindow.xaml.cs">
+    <Compile Update="ViewCheck\FilterCheck.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewGoods\AddGoods.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewGoods\ChangeGoods.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewCheck\CheckWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewGoods\FilterGoods.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewGoods\ViewCheckGoods.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AddGoodsForCheck.xaml">
+    <Page Update="ViewCheck\AddGoodsForCheck.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ChangeGoods.xaml">
+    <Page Update="ViewCheck\ChangeCheck.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="CheckWindow.xaml">
+    <Page Update="ViewCheck\FilterCheck.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewGoods\AddGoods.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewGoods\ChangeGoods.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewCheck\CheckWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewGoods\FilterGoods.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewGoods\ViewCheckGoods.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

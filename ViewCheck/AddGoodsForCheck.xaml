@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="AddGoodsForCheck" Height="281" Width="296">
-    <Grid>
-        <Label x:Name="label" Content="Добавить товар в чек" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="136"/>
+        Title="AddGoodsForCheck" Height="215" Width="296">
+    <Grid Margin="0,0,0,-6">
+        <Label x:Name="label" Content="Добавить товар в чек:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="136"/>
         <Label x:Name="namelab" Content="Название:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
         <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
         <Label x:Name="pricelab" Content="Цена за 1 шт:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
         <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="87,50,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
         <TextBox x:Name="pricetxt" HorizontalAlignment="Left" Margin="87,100,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
-        <Button x:Name="button" Content="Добавить" HorizontalAlignment="Left" Margin="80,165,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
+        <Button x:Name="button" Content="Добавить" HorizontalAlignment="Left" Margin="87,126,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
         <TextBox x:Name="idtxt" HorizontalAlignment="Left" Margin="8,188,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" IsEnabled="False" Visibility="Hidden"/>
         <TextBox x:Name="typetxt" HorizontalAlignment="Left" Margin="88,73,0,0" VerticalAlignment="Top" Width="144" Height="19"/>
 
-        <TextBox x:Name="id_check_txt" HorizontalAlignment="Left" Margin="246,45,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="29"/>
+        <!--<TextBox x:Name="id_check_txt" HorizontalAlignment="Left" Margin="246,45,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" IsEnabled="False" Visibility="Visible"/>-->
+        <Label x:Name="id_check_txt" Content="" HorizontalAlignment="Left" Margin="216,11,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" FontSize="11" Width="48"/>
 
-        <TextBox x:Name="status_check_txt" HorizontalAlignment="Left" Margin="246,0,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="29"/>
-        <DatePicker x:Name="time_check_txt" HorizontalAlignment="Left" Margin="242,85,0,0" VerticalAlignment="Top" Width="44"/>
+
+
+        <!--<TextBox x:Name="status_check_txt" HorizontalAlignment="Left" Margin="246,0,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Center" Width="29"/>
+        <DatePicker x:Name="time_check_txt" HorizontalAlignment="Left" Margin="242,85,0,0" VerticalAlignment="Top" Width="44"/>-->
 
     </Grid>
 </Window>

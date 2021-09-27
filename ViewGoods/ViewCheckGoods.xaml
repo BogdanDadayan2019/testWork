@@ -1,0 +1,34 @@
+﻿<Window x:Class="GoodsCheck.ViewGoods.ViewCheckGoods"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoodsCheck.ViewGoods"
+        mc:Ignorable="d"
+        Title="ViewCheckGoods" Height="293" Width="355" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid>
+        <DataGrid x:Name="dataGrid"  AutoGenerateColumns="False" FontFamily="Bahnschrift" IsReadOnly="True" Margin="0,44,0,0">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
+                <DataGridTextColumn Binding="{Binding CATEGORY_NAME}" Header="Тип товара"/>
+                <DataGridTextColumn Binding="{Binding GOODS_PRICE}" Header="Цена"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label x:Name="idcheck" HorizontalAlignment="Left" Margin="94,8,0,0" VerticalAlignment="Top" Width="55" FontFamily="Bahnschrift" Height="26" />
+        <Label x:Name="label" Content="Номер счета:" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
+        <Label x:Name="label_Copy" Content="Сумма счета:" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
+        <TextBlock x:Name="sumcheck" HorizontalAlignment="Left" Margin="256,7,0,0" VerticalAlignment="Top" Width="55" FontFamily="Bahnschrift" Height="26" />
+        <!--<DataGrid x:Name="dataGrid1" Margin="183,44,0,0">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Binding="{Binding }" Header="Наименование товара"/>
+               
+
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+    </Grid>
+</Window>
