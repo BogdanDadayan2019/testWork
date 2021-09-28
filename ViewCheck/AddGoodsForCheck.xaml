@@ -5,20 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="AddGoodsForCheck" Height="215" Width="296">
-    <Grid Margin="0,0,0,-6">
-        <Label x:Name="label" Content="Добавить товар в чек:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="136"/>
-        <Label x:Name="namelab" Content="Название:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="pricelab" Content="Цена за 1 шт:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="87,50,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
-        <TextBox x:Name="pricetxt" HorizontalAlignment="Left" Margin="87,100,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift"/>
-        <Button x:Name="button" Content="Добавить" HorizontalAlignment="Left" Margin="87,126,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
+        Title="AddGoodsForCheck" Height="217" Width="267" Closed="Window_Closed">
+    <Grid Margin="0,0,-27,-26">
+        <Label x:Name="label" Content="Добавить товар в чек:" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="136"/>
+        <Label x:Name="namelab" Content="Название:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" FontFamily="Arial"/>
+        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" FontFamily="Arial"/>
+        <Label x:Name="pricelab" Content="Цена за 1 шт:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontFamily="Arial"/>
+        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="93,47,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" FontFamily="Bahnschrift" Height="19"/>
+        <TextBox x:Name="pricetxt" HorizontalAlignment="Left" Margin="93,98,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" FontFamily="Bahnschrift" Height="18"/>
         <TextBox x:Name="idtxt" HorizontalAlignment="Left" Margin="8,188,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" IsEnabled="False" Visibility="Hidden"/>
-        <TextBox x:Name="typetxt" HorizontalAlignment="Left" Margin="88,73,0,0" VerticalAlignment="Top" Width="144" Height="19"/>
 
         <!--<TextBox x:Name="id_check_txt" HorizontalAlignment="Left" Margin="246,45,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="29" IsEnabled="False" Visibility="Visible"/>-->
-        <Label x:Name="id_check_txt" Content="" HorizontalAlignment="Left" Margin="216,11,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" FontSize="11" Width="48"/>
+        <Label x:Name="id_check_txt" Content="" HorizontalAlignment="Left" Margin="140,9,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="28" Height="24" FontSize="14" FontWeight="Bold"/>
+        <ComboBox x:Name="typetxt" HorizontalAlignment="Left" Margin="93,71,0,0" VerticalAlignment="Top" Width="139"/>
+        
+        <Button x:Name="button" Content="Добавить" HorizontalAlignment="Left" Margin="87,126,0,0" VerticalAlignment="Top" Click="Change_BtnClick" Width="145"/>
+        <Button x:Name="Cancel_btn" Content="Отменить" HorizontalAlignment="Left" Margin="87,151,0,0" VerticalAlignment="Top" Width="145" Click="Close_BtnClick"/>
 
 
 

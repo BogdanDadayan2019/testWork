@@ -16,18 +16,17 @@ using System.Windows.Shapes;
 
 namespace GoodsCheck.ViewCheck
 {
-    /// <summary>
-    /// Логика взаимодействия для ChangeCheck.xaml
-    /// </summary>
+   
     public partial class ChangeCheck : Window
     {
 
         OracleConnection con = null;
         MainWindow.UpdDbCheck updDbCheck;
 
-        public ChangeCheck(MainWindow.UpdDbCheck upd1, DataRowView dr)
+        public ChangeCheck(MainWindow.UpdDbCheck updCheck, DataRowView dr)
         {
-            this.updDbCheck = upd1;
+            this.updDbCheck = updCheck;
+
             SetConnection();
             InitializeComponent();
 
@@ -50,6 +49,47 @@ namespace GoodsCheck.ViewCheck
 
         }
 
+
+        private void Сhange_Click(object sender, RoutedEventArgs e)
+        {
+            String sql = "UPDATE GOODSCHECK2 SET CHECK_DATE = :CHECK_DATE, CHECK_STATUS = :CHECK_STATUS WHERE CHECK_ID = :CHECK_ID";
+            AUD(sql);
+            updDbCheck();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void AUD(String sql_stmt)
+        {
+            String msg = "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = sql_stmt;
+            cmd.CommandType = CommandType.Text;
+
+            msg = "Row Updated Successfully!";
+            
+            cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 25).Value = timetxt.SelectedDate;
+            cmd.Parameters.Add("CHECK_STATUS", OracleDbType.Varchar2, 25).Value = statustxt.Text;
+            cmd.Parameters.Add("CHECK_ID", OracleDbType.Int32, 6).Value = nametxt.Text;
+
+            try
+            {
+                int n = cmd.ExecuteNonQuery();
+                if (n > 0)
+                {
+                     MessageBox.Show(msg);
+                    updDbCheck();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private void SetConnection()
         {
             con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
@@ -64,43 +104,10 @@ namespace GoodsCheck.ViewCheck
             }
         }
 
-        private void change_Click(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            String sql = "UPDATE GOODSCHECK2 SET CHECK_ID = :CHECK_ID, CHECK_DATE = :CHECK_DATE, CHECK_STATUS = :GOODS_STATUS";
-            this.AUD(sql);
-
-            updDbCheck();
-
+            con.Close();
         }
-
-        private void AUD(String sql_stmt)
-        {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = sql_stmt;
-            cmd.CommandType = CommandType.Text;
-
-            msg = "Row Updated Successfully!";
-            cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = nametxt.Text;
-            cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 25).Value = timetxt.SelectedDate;
-            cmd.Parameters.Add("CHECK_STATUS", OracleDbType.Varchar2, 25).Value = statustxt.Text;
-
-            try
-            {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                     MessageBox.Show(msg);
-                    //  this.UpdateDataGrid();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        
 
     }
 }

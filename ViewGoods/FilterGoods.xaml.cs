@@ -58,12 +58,9 @@ namespace GoodsCheck.ViewGoods
             UpdateDataGrid();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
+      
 
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void Filter_BtnClick(object sender, RoutedEventArgs e)
         {
             //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price and category_name = :category_name) "; // имя, категория прайс от и до
 
@@ -115,6 +112,11 @@ namespace GoodsCheck.ViewGoods
             {
                 throw;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
         }
     }
 }

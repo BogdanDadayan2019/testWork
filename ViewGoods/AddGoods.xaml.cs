@@ -16,9 +16,7 @@ using System.Windows.Shapes;
 
 namespace GoodsCheck.ViewGoods
 {
-    /// <summary>
-    /// Логика взаимодействия для AddGoods.xaml
-    /// </summary>
+
     public partial class AddGoods : Window
     {
         OracleConnection con = null;
@@ -27,8 +25,63 @@ namespace GoodsCheck.ViewGoods
         public AddGoods(MainWindow.UpdDbCheck upd1)
         {
             this.upd1 = upd1;
+
             SetConnection();
             InitializeComponent();
+        }
+    
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
+            this.AUD(sql);
+            upd1();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void AUD(String sql_stmt)
+        {
+            String msg = "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = sql_stmt;
+            cmd.CommandType = CommandType.Text;
+
+            msg = "Row Inserted Successfully!";
+            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_txt.Text;
+            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_txt.Text;
+            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Varchar2, 6).Value = price_txt.Text;
+            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = desc_txt.Text;
+
+            try
+            {
+                int n = cmd.ExecuteNonQuery();
+                if (n > 0)
+                {
+                    MessageBox.Show(msg);                
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void UpdateComboBox()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "SELECT CATEGORY_NAME FROM CATEGORY";
+            cmd.CommandType = CommandType.Text;
+            DataTable dt = new DataTable();
+            OracleDataAdapter oracleData = new OracleDataAdapter(cmd);
+            oracleData.Fill(dt);
+
+            type_txt.ItemsSource = dt.AsDataView();
+            type_txt.DisplayMemberPath = dt.Columns[0].ToString();
+
+            cmd.ExecuteNonQuery();
         }
 
         private void SetConnection()
@@ -45,43 +98,15 @@ namespace GoodsCheck.ViewGoods
             }
         }
 
-        private void change_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
-            this.AUD(sql);
-            upd1();
+            UpdateComboBox();
         }
 
-        private void AUD(String sql_stmt)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = sql_stmt;
-            cmd.CommandType = CommandType.Text;
-
-            msg = "Row Inserted Successfully!";
-            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
-            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
-            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Varchar2, 25).Value = pricetxt.Text;
-            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Int32, 6).Value = desctxt.Text;
-
-
-            try
-            {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show(msg);
-                    //  this.UpdateDataGrid();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            con.Close();
         }
 
-       
     }
 }

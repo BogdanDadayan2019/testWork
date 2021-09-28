@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="CheckWindow" Height="208" Width="234">
-    <Grid Margin="0,0,0,-16">
-        <Label x:Name="label" Content="Создать чек" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
+        Title="CheckWindow" Height="208" Width="234" Closed="Window_Closed">
+    <Grid Height="208" VerticalAlignment="Top" HorizontalAlignment="Right" Width="234">
+        <Label x:Name="label" Content="Создать новый чек" HorizontalAlignment="Left" Margin="22,9,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
 
-        <TextBox x:Name="id_check_txt" HorizontalAlignment="Left" Margin="88,46,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-        <TextBox x:Name="status_check_txt" HorizontalAlignment="Left" Margin="88,99,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
-        <DatePicker x:Name="time_check_txt" HorizontalAlignment="Left" Margin="88,70,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label1" Content="Номер чека" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="78" Height="23"/>
-        <Label x:Name="label1_Copy" Content="Время" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="73" Height="23"/>
-        <Label x:Name="label1_Copy1" Content="Статус" HorizontalAlignment="Right" Margin="0,0,151,87" VerticalAlignment="Bottom" Width="73" Height="23"/>
-        <Button x:Name="add_btn" Content="Создать" HorizontalAlignment="Left" Margin="88,123,0,0" VerticalAlignment="Top" Click="add_btn_Click" Width="120"/>
-        <Button x:Name="cancel_btn" Content="Отмена" HorizontalAlignment="Left" Margin="88,146,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="id_check_txt" HorizontalAlignment="Left" Margin="100,43,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20"/>
+        <TextBox x:Name="status_check_txt" HorizontalAlignment="Left" Margin="100,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Height="20"/>
+        <DatePicker x:Name="time_check_txt" HorizontalAlignment="Left" Margin="100,67,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_number" Content="Номер чека" HorizontalAlignment="Left" Margin="22,40,0,0" VerticalAlignment="Top" Width="78" Height="23"/>
+        <Label x:Name="label_time" Content="Время" HorizontalAlignment="Left" Margin="22,68,0,0" VerticalAlignment="Top" Width="73" Height="23"/>
+        <Label x:Name="label_status" Content="Статус" HorizontalAlignment="Left" Margin="22,95,0,0" VerticalAlignment="Top" Width="73" Height="23"/>
+        <Button x:Name="add_btn" Content="Создать" HorizontalAlignment="Left" Margin="100,120,0,0" VerticalAlignment="Top" Click="Add_BtnClick" Width="120"/>
+        <Button x:Name="cancel_btn" Content="Отмена" HorizontalAlignment="Left" Margin="100,143,0,0" VerticalAlignment="Top" Width="120" Click="Cancel_BtnClick"/>
 
     </Grid>
 </Window>

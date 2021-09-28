@@ -27,7 +27,7 @@
         <TextBox x:Name="categorynametxt" HorizontalAlignment="Left" Margin="104,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="10"/>
         <TextBox x:Name="pricetxt1" HorizontalAlignment="Left" Margin="59,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="10"/>
         <TextBox x:Name="pricetxtx2" HorizontalAlignment="Left" Margin="144,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="10"/>
-        <Button x:Name="button" Content="Фильтр" HorizontalAlignment="Left" Margin="240,80,0,0" VerticalAlignment="Top" Width="86" Click="button_Click"/>
+        <Button x:Name="button" Content="Фильтр" HorizontalAlignment="Left" Margin="240,80,0,0" VerticalAlignment="Top" Width="86" Click="Filter_BtnClick"/>
 
     </Grid>
 </Window>

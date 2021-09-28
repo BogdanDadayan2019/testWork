@@ -24,44 +24,29 @@ namespace GoodsCheck.ViewGoods
         OracleConnection con = null;
         DataRowView dr;
         string a;
-        string b;
 
         public ViewCheckGoods(DataRowView dr)
         {
             this.dr = dr;
 
             SetConnection();
-
-            
-
             InitializeComponent();
+            UpdateLabel();
 
-        //    b = dr["GOODS_PRICE"].ToString();
+        }
 
+        private void UpdateLabel()
+        {
             try
             {
                 if (dr != null)
                 {
-                    //idcheck.Text = dr["CHECK_ID"].ToString();
                     a = dr["CHECK_ID"].ToString();
-                    idcheck.Content = a.ToString();
-                    
+                    label_idcheck.Content = a.ToString();
 
-
-
-                    //b = dr["GOODS_PRICE"].ToString();
-                    //foreach (var item in dr["GOODS_PRICE"])
-                    //{
-
-                    //}
-
-                    //idcheck1.Text = dr["CHECK_DATE"].ToString();
-                    //idcheck2.Text = dr["CHECK_STATUS"].ToString();
                 }
             }
             catch { }
-
-            // UpdateDataGrid();
         }
 
         private void UpdateDataGrid()
@@ -73,38 +58,38 @@ namespace GoodsCheck.ViewGoods
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dr);
-            dataGrid.ItemsSource = dt.DefaultView;
-            //UpdateSum();
-            var sum = 0;
-            foreach (DataRow item in dt.Rows)
-            {
-                var c = item.ItemArray[2];
-                sum += Int32.Parse(c.ToString());
-            }
-            sumcheck.Text = sum.ToString();
+            CheckGrid.ItemsSource = dt.DefaultView;
+            UpdateSum();
+            //var sum = 0;
+            //foreach (DataRow item in dt.Rows)
+            //{
+            //    var c = item.ItemArray[2];
+            //    sum += Int32.Parse(c.ToString());
+            //}
+            //sumcheck.Text = sum.ToString();
 
             dr.Close();
                  
         }
 
-        //private void UpdateSum()
-        //{
+        private void UpdateSum()
+        {
 
-        //    OracleCommand cmd = con.CreateCommand();
-        //    cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goodscheck2 WHERE check_id={a} GROUP BY check_id";
-        //    cmd.CommandType = CommandType.Text;
-        //    OracleDataReader dr = cmd.ExecuteReader();
-        //    DataTable dt = new DataTable();
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goodscheck2 WHERE check_id={a} GROUP BY check_id";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
 
-        //    dt.Load(dr);
+            dt.Load(dr);
 
-        //    var x = dt.Rows[0].ItemArray[1];
+            var x = dt.Rows[0].ItemArray[1];
 
-        //    sumcheck.Text = x.ToString();
+            sumcheck.Text = x.ToString();
 
-        //    dr.Close();
+            dr.Close();
 
-        //}
+        }
 
 
         private void SetConnection()
@@ -123,11 +108,8 @@ namespace GoodsCheck.ViewGoods
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //UpdateSum();
-            UpdateDataGrid();
-            
-           
+        {           
+            UpdateDataGrid();                    
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -136,3 +118,12 @@ namespace GoodsCheck.ViewGoods
         }
     }
 }
+
+//b = dr["GOODS_PRICE"].ToString();
+//foreach (var item in dr["GOODS_PRICE"])
+//{
+
+//}
+
+//idcheck1.Text = dr["CHECK_DATE"].ToString();
+//idcheck2.Text = dr["CHECK_STATUS"].ToString();

@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck.ViewCheck"
         mc:Ignorable="d"
-        Title="ChangeCheck" Height="237" Width="308">
-    <Grid>
-        <Label x:Name="label" Content="Изменить чек" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="88"/>
-        <Label x:Name="namelab" Content="Номер:" HorizontalAlignment="Left" Margin="40,66,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="40,90,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="pricelab" Content="Статус:" HorizontalAlignment="Left" Margin="40,116,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="117,69,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift" IsEnabled="False"/>
-        <TextBox x:Name="statustxt" HorizontalAlignment="Left" Margin="117,119,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift" Height="21"/>
-        <Button x:Name="button" Content="Изменить" HorizontalAlignment="Left" Margin="117,168,0,0" VerticalAlignment="Top" Click="change_Click" Width="145"/>
-        <DatePicker x:Name="timetxt" HorizontalAlignment="Left" Margin="117,90,0,0" VerticalAlignment="Top" Width="145"/>
+        Title="ChangeCheck" Height="223" Width="270" Closed="Window_Closed">
+    <Grid HorizontalAlignment="Center" Width="270" Height="223" VerticalAlignment="Top">
+        <Label x:Name="label" Content="Изменить чек" HorizontalAlignment="Center" Margin="0,8,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="226"/>
+        <Label x:Name="namelab" Content="Номер:" HorizontalAlignment="Left" Margin="18,42,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Height="22"/>
+        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="18,72,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Height="23"/>
+        <Label x:Name="pricelab" Content="Статус:" HorizontalAlignment="Left" Margin="22,0,0,0" VerticalAlignment="Center" FontFamily="Bahnschrift" Width="50" Height="23"/>
+        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="102,43,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontFamily="Bahnschrift" IsEnabled="False" Height="20"/>
+        <TextBox x:Name="statustxt" HorizontalAlignment="Left" Margin="102,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="145" FontFamily="Bahnschrift" Height="21"/>
+        <Button x:Name="Change_btn" Content="Изменить" HorizontalAlignment="Left" Margin="102,129,0,0" VerticalAlignment="Top" Click="Сhange_Click" Width="145"/>
+        <DatePicker x:Name="timetxt" HorizontalAlignment="Left" Margin="102,71,0,0" VerticalAlignment="Top" Width="145"/>
+        <Button x:Name="Cancel_btn" Content="Отменить" HorizontalAlignment="Left" Margin="102,154,0,0" VerticalAlignment="Top" Click="Cancel_Click" Width="145"/>
 
     </Grid>
 </Window>

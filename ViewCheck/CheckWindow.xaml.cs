@@ -20,44 +20,27 @@ namespace GoodsCheck
     public partial class CheckWindow : Window
     {
         OracleConnection con = null;
-        private MainWindow.UpdDbCheck _upd1;
+        private MainWindow.UpdDbCheck updCheck;
       
-
-        public CheckWindow(MainWindow.UpdDbCheck upd1)
+        public CheckWindow(MainWindow.UpdDbCheck updCheck)
         {
-           
-            _upd1 = upd1;
-            SetConnection();
+            this.updCheck = updCheck;
 
+            SetConnection();
             InitializeComponent();
         }
-
-        private void SetConnection()
-        {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private void upd_btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void add_btn_Click(object sender, RoutedEventArgs e)
+     
+        private void Add_BtnClick(object sender, RoutedEventArgs e)
         {
             String sql = "INSERT INTO GOODSCHECK2 (CHECK_ID, CHECK_DATE, CHECK_STATUS) VALUES(:CHECK_ID, :CHECK_DATE, :CHECK_STATUS)";
             this.AUD(sql);
-            _upd1();
+            updCheck();
         }
 
+        private void Cancel_BtnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
         private void AUD(String sql_stmt)
         {
@@ -86,5 +69,24 @@ namespace GoodsCheck
             }
         }
 
+        private void SetConnection()
+        {
+            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
+            try
+            {
+                con.Open();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            con.Close();
+        }
+       
     }
 }

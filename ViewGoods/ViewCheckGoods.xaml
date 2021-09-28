@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ViewCheckGoods" Height="293" Width="355" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <DataGrid x:Name="dataGrid"  AutoGenerateColumns="False" FontFamily="Bahnschrift" IsReadOnly="True" Margin="0,44,0,0">
+        <DataGrid x:Name="CheckGrid"  AutoGenerateColumns="False" FontFamily="Bahnschrift" IsReadOnly="True" Margin="0,44,0,0">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
@@ -17,18 +17,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label x:Name="idcheck" HorizontalAlignment="Left" Margin="94,8,0,0" VerticalAlignment="Top" Width="55" FontFamily="Bahnschrift" Height="26" />
-        <Label x:Name="label" Content="Номер счета:" HorizontalAlignment="Left" Margin="13,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
-        <Label x:Name="label_Copy" Content="Сумма счета:" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
-        <TextBlock x:Name="sumcheck" HorizontalAlignment="Left" Margin="256,7,0,0" VerticalAlignment="Top" Width="55" FontFamily="Bahnschrift" Height="26" />
-        <!--<DataGrid x:Name="dataGrid1" Margin="183,44,0,0">
-            <DataGrid.Columns>
-
-                <DataGridTextColumn Binding="{Binding }" Header="Наименование товара"/>
-               
-
-            </DataGrid.Columns>
-        </DataGrid>-->
+        <Label x:Name="label_idcheck" HorizontalAlignment="Left" Margin="87,8,0,0" VerticalAlignment="Top" Width="78" FontFamily="Bahnschrift" Height="26" />
+        <Label x:Name="label_check" Content="Номер счета:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
+        <Label x:Name="label_sum" Content="Сумма счета:" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="86" FontFamily="Bahnschrift" />
+        <TextBlock x:Name="sumcheck" HorizontalAlignment="Left" Margin="256,10,0,0" VerticalAlignment="Top" Width="85" FontFamily="Bahnschrift" Height="25" />
 
     </Grid>
 </Window>

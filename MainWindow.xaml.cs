@@ -26,34 +26,18 @@ namespace GoodsCheck
         public delegate void UpdDbCheck();
         public delegate void UpdDbGoods();
 
-        UpdDbCheck upd1;
+        UpdDbCheck updCheck;
         UpdDbGoods updGoods;
         DataRowView dr;
 
         OracleConnection con = null;
 
         public MainWindow()
-        {
-            
-           // upd = CheckUpdateDataGrid();
+        {         
             SetConnection();       
             InitializeComponent();
         }        
-
-        private void SetConnection()
-        {         
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+    
         private void UpdateDataGrid()
         {
             OracleCommand cmd = con.CreateCommand();
@@ -62,7 +46,7 @@ namespace GoodsCheck
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dr);
-            goodsGrid.ItemsSource = dt.DefaultView;
+            GoodsGrid.ItemsSource = dt.DefaultView;
             dr.Close();
         }
 
@@ -75,70 +59,32 @@ namespace GoodsCheck
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dr);
-            chekGrid.ItemsSource = dt.DefaultView;
+            ChekGrid.ItemsSource = dt.DefaultView;
             dr.Close();
         }
-
-        //private void UpdateComboBox()
-        //{
-        //    OracleCommand cmd = con.CreateCommand();
-        //    cmd.CommandText = "SELECT CATEGORY_NAME FROM GOODS";
-        //    cmd.CommandType = CommandType.Text;
-        //    DataTable dt = new DataTable();
-        //    OracleDataAdapter oracleData = new OracleDataAdapter(cmd);
-        //    oracleData.Fill(dt);
-
-        //    //te.ItemsSource = dt.AsDataView();
-        //    //comboBox.DisplayMemberPath = dt.Columns[0].ToString();
-
-        //    cmd.ExecuteNonQuery();
-
-        //}
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+      
+        private void Add_Goods_BtnClick(object sender, RoutedEventArgs e)
         {
-           
-            
-            UpdateDataGrid();
-            CheckUpdateDataGrid();
-            //UpdateComboBox();
-
-            
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            con.Close();
-        }
-
-        private void add_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
-            //this.AUD(sql, 1);
-            //add_btn.IsEnabled = false;
-            //upd_btn.IsEnabled = true;
-            //delete_btn.IsEnabled = true;
-
-            upd1 = UpdateDataGrid;
-            AddGoods check = new AddGoods(upd1);
+            updCheck = UpdateDataGrid;
+            AddGoods check = new AddGoods(updCheck);
             check.Show();
         }
 
-        private void upd_btn_Click(object sender, RoutedEventArgs e)
+        private void Update_Goods_BtnClick(object sender, RoutedEventArgs e)
         {        
             ChangeGoods changeGoods = new ChangeGoods(dr, updGoods);
             changeGoods.Show();
         }
       
-        private void delete_btn_Click(object sender, RoutedEventArgs e)
+        private void Delete_Goods_BtnClick(object sender, RoutedEventArgs e)
         {
             String sql = "DELETE FROM GOODS WHERE GOODS_ID = :GOODS_ID";
             AUD(sql, 2);
+            CheckUpdateDataGrid();
         }
 
         private void AUD(String sql_stmt, int state)
         {
-
             String msg = "";
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = sql_stmt;
@@ -169,6 +115,7 @@ namespace GoodsCheck
                 case 3:
                     msg = "Check Deleted Successfully";
                         cmd.Parameters.Add("CHECK_ID", OracleDbType.Int32, 6).Value = id_check_txt.Text;
+                    CheckUpdateDataGrid();
                     break;
             }
             try
@@ -182,15 +129,13 @@ namespace GoodsCheck
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public void goodsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void GoodsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             updGoods += UpdateDataGrid;
-            //updGoods += UpdateComboBox;
 
             DataGrid dg = sender as DataGrid;
             dr = dg.SelectedItem as DataRowView;
@@ -199,166 +144,77 @@ namespace GoodsCheck
             {
 
                 id_goods_txt.Text = dr["GOODS_ID"].ToString();
-                
-
-                add_btn.IsEnabled = false;
-                upd_btn.IsEnabled = true;
-                delete_btn.IsEnabled = true;
 
             }
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine("1");
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-
-            
-           
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void goodsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void GoodsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //ChangeGoods changeGoods = new ChangeGoods();
             //changeGoods.Show();
         }
 
-        private void add_check_btn(object sender, RoutedEventArgs e)
-        {
-            upd1 = CheckUpdateDataGrid;
-            CheckWindow check = new CheckWindow(upd1);
-            check.Show();
-        }
-
-        private void add_for_check_btn(object sender, RoutedEventArgs e)
-        {
-            AddGoodsForCheck changeGoods = new AddGoodsForCheck(dr);
-            changeGoods.Show();
-        }
-
-        private void change_check_btn(object sender, RoutedEventArgs e)
-        {
-            upd1 = CheckUpdateDataGrid;
-            ChangeCheck check = new ChangeCheck(upd1, dr);
-            check.Show();
-        }
-
-        private void delete_check_btn(object sender, RoutedEventArgs e)
-        {
-            String sql = "DELETE FROM GOODSCHECK2 WHERE CHECK_ID = :CHECK_ID";
-            AUD(sql, 3);
-        }
-
-        private void chekGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ChekGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
             dr = dg.SelectedItem as DataRowView;
             if (dr != null)
             {
-
                 id_check_txt.Text = dr["CHECK_ID"].ToString();
-
             }
-            
-
         }
 
-        private void chekGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ChekGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ViewCheckGoods changeGoods = new ViewCheckGoods(dr);
             changeGoods.Show();
         }
 
-        private void filtr_btn_Click(object sender, RoutedEventArgs e)
+        private void Add_Check_BtnClick(object sender, RoutedEventArgs e)
         {
+            updCheck = CheckUpdateDataGrid;
+            CheckWindow check = new CheckWindow(updCheck);
+            check.Show();
+        }
 
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name)"; //имя 
+        private void Add_For_Check_BtnClick(object sender, RoutedEventArgs e)
+        {
+            AddGoodsForCheck changeGoods = new AddGoodsForCheck(dr);
+            changeGoods.Show();
+        }
 
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name)"; //категория
+        private void Update_Check_BtnClick(object sender, RoutedEventArgs e)
+        {
+            updCheck = CheckUpdateDataGrid;
+            ChangeCheck check = new ChangeCheck(updCheck, dr);
+            check.Show();
+        }
 
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price > :goods_price) "; // прайс от
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price < :goods_price) "; // прайс до
+        private void Delete_Check_BtnClick(object sender, RoutedEventArgs e)
+        {
+            String sql = "DELETE FROM GOODSCHECK2 WHERE CHECK_ID = :CHECK_ID";
+            AUD(sql, 3);
+            CheckUpdateDataGrid();
+        }
 
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price > :goods_price and goods_price < :goods_price) "; //прайс от и до
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price) ";  // имя, прайс от
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price < :goods_price) ";  // имя, прайс до
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name and goods_price > :goods_price) ";  // категория, прайс от
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name and goods_price < :goods_price) ";  // категория, прайс до
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and category_name = :category_name)"; // имя и категория
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price)"; // имя, прайс от
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price < :goods_price)"; // имя, прайс до
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price) "; // имя, прайс от и до
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and category_name = :category_name) "; // имя, категория прайс от 
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and category_name = :category_name) "; // имя, категория прайс до
-
-
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price and category_name = :category_name) "; // имя, категория прайс от и до
-
-            // AUD(sql);
-
+        private void Filtr_BtnClick(object sender, RoutedEventArgs e)
+        {
             FilterGoods filter = new FilterGoods();
             filter.Show();
-
         }
 
-        private void FiltrGoods()
+        private void Filter_Check_BtnClick(object sender, RoutedEventArgs e)
         {
-           
-
+            FilterCheck filter = new FilterCheck();
+            filter.Show();
         }
 
-        private void AUD(String sql_stmt)
+        private void SetConnection()
         {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = sql_stmt;
-            cmd.CommandType = CommandType.Text;
-
-            //if (filtr_name.Text == "")
-            //{
-
-            //} if else { filtr_name.}
-
-
-            msg = "Row Updated Successfully!";
-            //cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = filtr_name.Text;
-            //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 25).Value = filtr_price1.Text;
-            //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 25).Value = filtr_price2.Text;
-            //cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = filtr_category.Text;
-
-
-
-            //cmd.CommandText = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name)";
-            //cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-            goodsGrid.ItemsSource = dt.DefaultView;
-            dr.Close();
-            //cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 25).Value = filtr_price.SelectedDate;
-
-
+            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
             try
             {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show(msg);
-                    //  this.UpdateDataGrid();
-                }
+                con.Open();
             }
             catch (Exception)
             {
@@ -366,47 +222,44 @@ namespace GoodsCheck
             }
         }
 
-        private void filter_check_btn(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            FilterCheck filter = new FilterCheck();
-            filter.Show();
+            UpdateDataGrid();
+            CheckUpdateDataGrid();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            con.Close();
         }
     }
 }
 
-//switch (state)
-//{
-//    case 0:
-//        msg = "Row Inserted Successfully!";
-//        cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
-//        cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
-//        cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
-//        cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
-//        break;
-//    case 1:
-//        msg = "Row Updated Successfully!";
-//        cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_goods_txt.Text;
-//        cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_goods_txt.Text;
-//        cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_goods_txt.Text;
-//        cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descrip_goods_txt.Text;
-//        cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text;
-//        break;
-//    case 2:
-//        msg = "Row Deleted Successfully";
-//        cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 25).Value = id_goods_txt.Text; 
-//        break;
-//}
-//try
-//{
-//    int n = cmd.ExecuteNonQuery();
-//    if (n > 0)
-//    {
-//        MessageBox.Show(msg);
-//        this.UpdateDataGrid();
-//    }
-//}
-//catch (Exception)
-//{
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name)"; //имя 
 
-//    throw;
-//}
+//String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name)"; //категория
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price > :goods_price) "; // прайс от
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price < :goods_price) "; // прайс до
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_price > :goods_price and goods_price < :goods_price) "; //прайс от и до
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price) ";  // имя, прайс от
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price < :goods_price) ";  // имя, прайс до
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name and goods_price > :goods_price) ";  // категория, прайс от
+//String sql = "select * from goods where goods_id in (select goods_id from goods where category_name = :category_name and goods_price < :goods_price) ";  // категория, прайс до
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and category_name = :category_name)"; // имя и категория
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price)"; // имя, прайс от
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price < :goods_price)"; // имя, прайс до
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price) "; // имя, прайс от и до
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and category_name = :category_name) "; // имя, категория прайс от 
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and category_name = :category_name) "; // имя, категория прайс до
+
+
+//String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price and category_name = :category_name) "; // имя, категория прайс от и до
+
+// AUD(sql);

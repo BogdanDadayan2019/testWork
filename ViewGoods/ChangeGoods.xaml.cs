@@ -21,25 +21,40 @@ namespace GoodsCheck
     {
 
         OracleConnection con = null;
+        DataRowView dr;
         MainWindow.UpdDbGoods updDbGoods;
 
         public ChangeGoods(DataRowView dr, MainWindow.UpdDbGoods updDbGoods)
         {
+            this.dr = dr;
             this.updDbGoods = updDbGoods;
-            
-            SetConnection();
-            
 
+            SetConnection(); 
             InitializeComponent();
+        }
+
+        private void Change_Click(object sender, RoutedEventArgs e)
+        {
+            String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
+            this.AUD(sql);
+            updDbGoods();
+
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void UpdateField()
+        {
             if (dr != null)
             {
-
-                nametxt.Text = dr["GOODS_NAME"].ToString();
-                typetxt.Text = dr["CATEGORY_NAME"].ToString();
-                pricetxt.Text = dr["GOODS_PRICE"].ToString();
-                descriptiontxt.Text = dr["GOODS_DESCRIPTION"].ToString();
-                idtxt.Text = dr["GOODS_ID"].ToString();
-
+                name_txt.Text = dr["GOODS_NAME"].ToString();
+                type_txt.Text = dr["CATEGORY_NAME"].ToString();
+                price_txt.Text = dr["GOODS_PRICE"].ToString();
+                descr_txt.Text = dr["GOODS_DESCRIPTION"].ToString();
+                id_txt.Text = dr["GOODS_ID"].ToString();
             }
             UpdateComboBox();
         }
@@ -47,19 +62,46 @@ namespace GoodsCheck
         private void UpdateComboBox()
         {
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CATEGORY_NAME FROM GOODS";
+            cmd.CommandText = "SELECT CATEGORY_NAME FROM CATEGORY";
             cmd.CommandType = CommandType.Text;
             DataTable dt = new DataTable();
             OracleDataAdapter oracleData = new OracleDataAdapter(cmd);
             oracleData.Fill(dt);
 
-            typetxt.ItemsSource = dt.AsDataView();
-            typetxt.DisplayMemberPath = dt.Columns[0].ToString();
+            type_txt.ItemsSource = dt.AsDataView();
+            type_txt.DisplayMemberPath = dt.Columns[0].ToString();
 
             cmd.ExecuteNonQuery();
 
         }
 
+        private void AUD(String sql_stmt)
+        {
+            String msg = "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = sql_stmt;
+            cmd.CommandType = CommandType.Text;
+
+            msg = "Row Updated Successfully!";
+            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_txt.Text;
+            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_txt.Text;
+            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_txt.Text;
+            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descr_txt.Text;
+            cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 6).Value = id_txt.Text;
+
+            try
+            {
+                int n = cmd.ExecuteNonQuery();
+                if (n > 0)
+                {
+                    MessageBox.Show(msg);                 
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         private void SetConnection()
         {
@@ -75,42 +117,15 @@ namespace GoodsCheck
             }
         }
 
-        private void change_Click(object sender, RoutedEventArgs e)
-        {
-            String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
-            this.AUD(sql);
-
-            updDbGoods();
-           
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {         
+            UpdateField();
         }
 
-        private void AUD(String sql_stmt)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = sql_stmt;
-            cmd.CommandType = CommandType.Text;
-
-            msg = "Row Updated Successfully!";
-            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
-            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.SelectedItem;
-            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = pricetxt.Text;
-            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = descriptiontxt.Text;
-            cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 6).Value = idtxt.Text;
-
-            try
-            {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                   // MessageBox.Show(msg);
-                    //  this.UpdateDataGrid();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            con.Close();
         }
+
     }
 }

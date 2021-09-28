@@ -5,27 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck"
         mc:Ignorable="d"
-        Title="MainWindow" Height="482" Width="800" Loaded="Window_Loaded" >
+        Title="MainWindow" Height="482" Width="690" Loaded="Window_Loaded" >
     <Grid Visibility="Visible">
         <TabControl>
 
             <TabItem x:Name="GoodsTab" Header="Товары" FontFamily="Bahnschrift">
                 <TabPanel>
-                    <TabPanel Height="438" HorizontalAlignment="Left" Width="127">
-                        <Button x:Name="add_btn"  Click="add_btn_Click" Content="Создать" Margin="14,190,-66,-200" FontFamily="Bahnschrift"></Button>
-                        <Button x:Name="upd_btn" Click="upd_btn_Click" Content="Изменить" Margin="-47,219,-3,-232" FontFamily="Bahnschrift"></Button>
-                        <Button x:Name="delete_btn" Click="delete_btn_Click" Content="Удалить" Margin="17,236,-63,-245" FontFamily="Bahnschrift"/>
-                        <Button x:Name="filt_btn" Click="filtr_btn_Click" Content="Фильтр" Margin="-51,129,3,-138" FontFamily="Bahnschrift"/>
+                    <TabPanel Height="438" HorizontalAlignment="Center" Width="128">
+                        <Button x:Name="AddGoodsBtn"  Click="Add_Goods_BtnClick" Content="Создать" Margin="13,87,-66,-88" FontFamily="Bahnschrift"></Button>
+                        <Button x:Name="UpdGoodsBtn" Click="Update_Goods_BtnClick" Content="Изменить" Margin="-49,111,0,-112" FontFamily="Bahnschrift"></Button>
+                        <Button x:Name="DeleteGoodsBtn" Click="Delete_Goods_BtnClick" Content="Удалить" Margin="13,117,-64,-118" FontFamily="Bahnschrift"/>
+                        <Button x:Name="FiltGoodsBtn" Click="Filtr_BtnClick" Content="Фильтр" Margin="-51,43,0,-45" FontFamily="Bahnschrift"/>
 
                     </TabPanel>
-                    <DataGrid x:Name="goodsGrid" Height="406" AutoGenerateColumns="False" SelectionChanged="goodsGrid_SelectionChanged" FontFamily="Bahnschrift" IsReadOnly="True" MouseDoubleClick="goodsGrid_MouseDoubleClick" Margin="56,0,-244,0">
+                    <DataGrid x:Name="GoodsGrid" Height="314" AutoGenerateColumns="False" SelectionChanged="GoodsGrid_SelectionChanged" FontFamily="Bahnschrift" IsReadOnly="True" MouseDoubleClick="GoodsGrid_MouseDoubleClick" Margin="22,0,-160,0">
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
                             <DataGridTextColumn Binding="{Binding CATEGORY_NAME}" Header="Тип товара"/>
                             <DataGridTextColumn Binding="{Binding GOODS_PRICE}" Header="Цена"/>
                             <DataGridTextColumn Binding="{Binding GOODS_DESCRIPTION}" Header="Описание товара"/>
-                            <DataGridTextColumn Binding="{Binding GOODS_ID}" Header="Id"/>
+
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -34,17 +34,17 @@
 
             <TabItem x:Name="checkTab" Header="Чеки" >
                 <TabPanel>
-                    <TabPanel Margin="0,0,87,0" Height="438">
+                    <TabPanel Height="438" HorizontalAlignment="Center" Width="128">
 
-                        <Button x:Name="AddCheckBtn"  Click="add_check_btn" Content="Создать" Margin="14,191,-67,-201" FontFamily="Bahnschrift"></Button>
-                        <Button x:Name="AddForCheckBtn" Click="add_for_check_btn" Content="Добавить" Margin="-39,224,-10,-236" FontFamily="Bahnschrift"></Button>
-                        <Button x:Name="DeleteCheckBtn" Click="delete_check_btn" Content="Удалить" Margin="-97,291,45,-301" FontFamily="Bahnschrift"/>
-                        <Button x:Name="DeleteChec1kBtn" Click="change_check_btn" Content="Изменить" Margin="-149,257,99,-268" FontFamily="Bahnschrift"/>
-                        <Button x:Name="FilterBtn" Click="filter_check_btn" Content="Фильтр" Margin="-208,157,154,-168" FontFamily="Bahnschrift"/>
+                        <Button x:Name="AddCheckBtn"  Click="Add_Check_BtnClick" Content="Создать" Margin="10,85,-66,-87" FontFamily="Bahnschrift"></Button>
+                        <Button x:Name="AddForCheckBtn" Click="Add_For_Check_BtnClick" Content="Добавить" Margin="-53,110,-1,-112" FontFamily="Bahnschrift"></Button>
+                        <Button x:Name="ChangeCheckBtn" Click="Update_Check_BtnClick" Content="Изменить" Margin="10,116,-1,-116" FontFamily="Bahnschrift"/>
+                        <Button x:Name="DeleteCheckBtn" Click="Delete_Check_BtnClick" Content="Удалить" Margin="10,121,-65,-122" FontFamily="Bahnschrift"/>
+                        <Button x:Name="FilterBtn" Click="Filtr_BtnClick" Content="Фильтр" Margin="-54,25,0,-25" FontFamily="Bahnschrift"/>
 
                     </TabPanel>
 
-                    <DataGrid x:Name="chekGrid" Height="406" AutoGenerateColumns="False" FontFamily="Bahnschrift" Margin="-66,0,-173,0" SelectionChanged="chekGrid_SelectionChanged" IsReadOnly="True" MouseDoubleClick="chekGrid_MouseDoubleClick">
+                    <DataGrid x:Name="ChekGrid" Height="314" AutoGenerateColumns="False" FontFamily="Bahnschrift" Margin="22,0,-269,0" SelectionChanged="ChekGrid_SelectionChanged" IsReadOnly="True" MouseDoubleClick="ChekGrid_MouseDoubleClick">
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Binding="{Binding CHECK_ID}" Header="Номер чека"/>
