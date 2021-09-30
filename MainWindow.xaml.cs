@@ -36,8 +36,7 @@ namespace GoodsCheck
         public MainWindow()
         {         
             SetConnection();       
-            InitializeComponent();
-            
+            InitializeComponent();   
         }        
     
         private void UpdateDataGrid()
@@ -250,7 +249,6 @@ namespace GoodsCheck
         {
             con.Close();
         }
-
 
     }
 }

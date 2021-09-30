@@ -96,7 +96,7 @@ namespace GoodsCheck.ViewCheck
 
         private void Filtr_BtnClick(object sender, RoutedEventArgs e)
         {
-                UpdateDataGrid2();
+             UpdateDataGrid2();
         }
 
         private void UpdateDataGrid2()
@@ -117,9 +117,18 @@ namespace GoodsCheck.ViewCheck
                     cmd.Parameters.Add("g_date", null);
                 }
                 else { cmd.Parameters.Add("g_date", Convert.ToDateTime(datePicker.Text)); }
-                cmd.Parameters.Add("g_price1", Convert.ToString(pricetxt1.Text));
-                cmd.Parameters.Add("g_price2", Convert.ToString(pricetxt2.Text));
 
+                if (pricetxt1.Text == "")
+                {
+                    cmd.Parameters.Add("g_price1", "0");
+                }
+                else { cmd.Parameters.Add("g_price1", Convert.ToString(pricetxt1.Text)); }
+
+                if (pricetxt2.Text == "")
+                {
+                    cmd.Parameters.Add("g_price2", "2147483647");
+                }
+                else { cmd.Parameters.Add("g_price2", Convert.ToString(pricetxt2.Text)); }
 
                 output.Direction = ParameterDirection.ReturnValue;
 
