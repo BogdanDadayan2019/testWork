@@ -25,7 +25,7 @@
         <Label x:Name="label2_Copy2" Content="до" HorizontalAlignment="Left" Margin="158,88,0,0" VerticalAlignment="Top" Width="27" Height="22" FontSize="10"/>
         <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="81,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" FontSize="10" Height="26"/>
         <TextBox x:Name="pricetxt1" HorizontalAlignment="Left" Margin="92,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
-        <TextBox x:Name="pricetxtx2" HorizontalAlignment="Left" Margin="185,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
+        <TextBox x:Name="pricetxt2" HorizontalAlignment="Left" Margin="185,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
         <Button x:Name="button" Content="Фильтр" HorizontalAlignment="Left" Margin="240,52,0,0" VerticalAlignment="Top" Width="86" Click="Filtr_BtnClick"/>
         <DatePicker x:Name="datePicker" HorizontalAlignment="Left" Margin="81,61,0,0" VerticalAlignment="Top" Height="26" Width="126"/>
 

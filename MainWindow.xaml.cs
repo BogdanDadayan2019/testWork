@@ -37,6 +37,7 @@ namespace GoodsCheck
         {         
             SetConnection();       
             InitializeComponent();
+            
         }        
     
         private void UpdateDataGrid()
@@ -73,6 +74,7 @@ namespace GoodsCheck
 
         private void Update_Goods_BtnClick(object sender, RoutedEventArgs e)
         {        
+
             ChangeGoods changeGoods = new ChangeGoods(dr, updGoods);
             changeGoods.Show();
         }
@@ -128,14 +130,19 @@ namespace GoodsCheck
                     this.UpdateDataGrid();
                 }
             }
-            catch (Exception)
+            catch (FormatException)
             {
-                throw;
+                msg = "Вы не выбрали товар";
+                MessageBox.Show(msg);
             }
         }
 
         public void GoodsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UpdGoodsBtn.IsEnabled = true;
+
+            DeleteGoodsBtn.IsEnabled = true;
+
             updGoods += UpdateDataGrid;
 
             DataGrid dg = sender as DataGrid;
@@ -157,6 +164,9 @@ namespace GoodsCheck
 
         private void ChekGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ChangeCheckBtn.IsEnabled = true;
+            DeleteCheckBtn.IsEnabled = true;
+
             DataGrid dg = sender as DataGrid;
             dr = dg.SelectedItem as DataRowView;
             if (dr != null)
@@ -193,6 +203,7 @@ namespace GoodsCheck
 
         private void Delete_Check_BtnClick(object sender, RoutedEventArgs e)
         {
+
             String sql = "DELETE FROM GOODSCHECK2 WHERE CHECK_ID = :CHECK_ID";
             AUD(sql, 3);
             CheckUpdateDataGrid();
@@ -200,7 +211,7 @@ namespace GoodsCheck
 
         private void Filtr_Check_BtnClick(object sender, RoutedEventArgs e)
         {
-            FilterCheck filter = new FilterCheck();
+            FilterCheck filter = new FilterCheck(dr);
             filter.Show();
         }
 
@@ -225,6 +236,12 @@ namespace GoodsCheck
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            UpdGoodsBtn.IsEnabled = false;
+            DeleteGoodsBtn.IsEnabled = false;
+
+            ChangeCheckBtn.IsEnabled = false;
+            DeleteCheckBtn.IsEnabled = false;
+
             UpdateDataGrid();
             CheckUpdateDataGrid();
         }

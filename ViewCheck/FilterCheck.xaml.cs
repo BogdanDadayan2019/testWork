@@ -21,9 +21,13 @@ namespace GoodsCheck.ViewCheck
     public partial class FilterCheck : Window
     {
         OracleConnection con = null;
+        DataRowView dr;
+        string a;
 
-        public FilterCheck()
+        public FilterCheck(DataRowView dr)
         {
+            this.dr = dr;
+
             SetConnection();
             InitializeComponent();
         }
@@ -54,6 +58,42 @@ namespace GoodsCheck.ViewCheck
             }
         }
 
+        private void UpdateLabel()
+        {
+            try
+            {
+                if (dr != null)
+                {
+                    a = dr["CHECK_ID"].ToString();
+                    //label_idcheck.Content = a.ToString();
+
+                }
+            }
+            catch { }
+        }
+
+
+        private void UpdateSum()
+        {
+
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goodscheck2 WHERE check_id={a} GROUP BY check_id";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+
+            dt.Load(dr);
+
+            var x = dt.Rows[0].ItemArray[1];
+
+            dataGrid.ItemsSource = dt.DefaultView;
+
+            //sumcheck.Text = x.ToString();
+
+            dr.Close();
+
+        }
+
         private void Filtr_BtnClick(object sender, RoutedEventArgs e)
         {
                 UpdateDataGrid2();
@@ -71,9 +111,14 @@ namespace GoodsCheck.ViewCheck
 
                 OracleParameter output = cmd.Parameters.Add("l_cursor", OracleDbType.RefCursor);
 
-                cmd.Parameters.Add("c_number", Convert.ToString(nametxt.Text));            
-                cmd.Parameters.Add("c_date", Convert.ToDateTime(datePicker.Text));
-                
+                cmd.Parameters.Add("g_id", Convert.ToString(nametxt.Text));
+                if (datePicker.Text == "")
+                {
+                    cmd.Parameters.Add("g_date", null);
+                }
+                else { cmd.Parameters.Add("g_date", Convert.ToDateTime(datePicker.Text)); }
+                cmd.Parameters.Add("g_price1", Convert.ToString(pricetxt1.Text));
+                cmd.Parameters.Add("g_price2", Convert.ToString(pricetxt2.Text));
 
 
                 output.Direction = ParameterDirection.ReturnValue;

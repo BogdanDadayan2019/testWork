@@ -35,9 +35,19 @@ namespace GoodsCheck
 
         private void Change_Click(object sender, RoutedEventArgs e)
         {
-            String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
-            this.AUD(sql);
-            updDbGoods();
+            try
+            {
+                String sql = "UPDATE GOODS SET GOODS_NAME = :GOODS_NAME, CATEGORY_NAME = :CATEGORY_NAME, GOODS_PRICE = :GOODS_PRICE, GOODS_DESCRIPTION = :GOODS_DESCRIPTION WHERE GOODS_ID = :GOODS_ID";
+                this.AUD(sql);
+                
+            }
+            catch (NullReferenceException)
+            {
+
+                string msg = "Вы не выбрали товар";
+                MessageBox.Show(msg);
+            }
+            
 
         }
 
@@ -48,7 +58,9 @@ namespace GoodsCheck
 
         private void UpdateField()
         {
-            if (dr != null)
+            try
+            {
+                if (dr != null)
             {
                 name_txt.Text = dr["GOODS_NAME"].ToString();
                 type_txt.Text = dr["CATEGORY_NAME"].ToString();
@@ -57,6 +69,14 @@ namespace GoodsCheck
                 id_txt.Text = dr["GOODS_ID"].ToString();
             }
             UpdateComboBox();
+            }
+            catch (ArgumentException)
+            {
+
+                string msg = "Выберите элемент";
+                MessageBox.Show(msg);
+            }
+            
         }
 
         private void UpdateComboBox()
@@ -91,16 +111,25 @@ namespace GoodsCheck
 
             try
             {
+               
                 int n = cmd.ExecuteNonQuery();
                 if (n > 0)
                 {
+                    updDbGoods();
                     MessageBox.Show(msg);                 
                 }
             }
-            catch (Exception)
+            catch (NullReferenceException)
             {
-                throw;
+                msg = "Вы не выбрали позицию";
+                MessageBox.Show(msg);
             }
+            catch (Exception ex)
+            {
+                msg = "Вы не выбрали позицию";
+                MessageBox.Show(msg);
+            }
+            
         }
 
         private void SetConnection()

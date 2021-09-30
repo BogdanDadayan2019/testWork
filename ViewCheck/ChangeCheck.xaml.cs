@@ -80,13 +80,13 @@ namespace GoodsCheck.ViewCheck
                 int n = cmd.ExecuteNonQuery();
                 if (n > 0)
                 {
-                     MessageBox.Show(msg);
+                     
                     updDbCheck();
                 }
             }
             catch (Exception)
             {
-                throw;
+                MessageBox.Show(msg);
             }
         }
 

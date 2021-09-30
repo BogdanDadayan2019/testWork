@@ -16,9 +16,7 @@ using System.Windows.Shapes;
 
 namespace GoodsCheck.ViewGoods
 {
-    /// <summary>
-    /// Логика взаимодействия для ViewCheckGoods.xaml
-    /// </summary>
+
     public partial class ViewCheckGoods : Window
     {
         OracleConnection con = null;
@@ -53,7 +51,7 @@ namespace GoodsCheck.ViewGoods
         {
             
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = $"SELECT GOODS_NAME, CATEGORY_NAME, GOODS_PRICE FROM GOODSCHECK2 WHERE CHECK_ID = {a}";
+            cmd.CommandText = $"SELECT GOODS_NAME, CATEGORY_NAME, GOODS_PRICE FROM GOODS_IN_CHECK WHERE CHECK_ID = {a}";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
@@ -76,7 +74,7 @@ namespace GoodsCheck.ViewGoods
         {
 
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goodscheck2 WHERE check_id={a} GROUP BY check_id";
+            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM GOODS_IN_CHECK WHERE check_id={a} GROUP BY check_id";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
@@ -84,6 +82,8 @@ namespace GoodsCheck.ViewGoods
             dt.Load(dr);
 
             var x = dt.Rows[0].ItemArray[1];
+
+            //CheckGrid.ItemsSource = dt.DefaultView;
 
             sumcheck.Text = x.ToString();
 

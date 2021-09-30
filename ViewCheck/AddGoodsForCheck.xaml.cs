@@ -33,7 +33,7 @@ namespace GoodsCheck
 
         private void Change_BtnClick(object sender, RoutedEventArgs e)
         {
-            String sql = "INSERT INTO GOODSCHECK2 (CHECK_ID, CATEGORY_NAME, GOODS_NAME, GOODS_PRICE) VALUES(:CHECK_ID, :CATEGORY_NAME, :GOODS_NAME, :GOODS_PRICE)";
+            String sql = "INSERT INTO GOODS_IN_CHECK (CHECK_ID, GOODS_NAME, CATEGORY_NAME ,GOODS_PRICE) VALUES(:CHECK_ID, :GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE)";
             this.AUD(sql);
         }
 
@@ -86,8 +86,8 @@ namespace GoodsCheck
 
             msg = "Row Inserted Successfully!";
             cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Content;
-            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
             cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
+            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
             cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = pricetxt.Text;
 
             try
