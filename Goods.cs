@@ -14,7 +14,7 @@ namespace GoodsCheck
         private int _goods_price;
         private string _goods_description;
 
-        public int Goods_id
+        public int GOODS_ID
         {
             get
             {
@@ -26,7 +26,7 @@ namespace GoodsCheck
             }
         }
 
-        public string Category_name
+        public string CATEGORY_NAME
         {
             get 
             {
@@ -38,7 +38,7 @@ namespace GoodsCheck
             }
         }
 
-        public string Goods_name
+        public string GOODS_NAME
         {
             get
             {
@@ -50,7 +50,7 @@ namespace GoodsCheck
             }
         }
 
-        public int Goods_price
+        public int GOODS_PRICE
         {
             get
             {
@@ -62,7 +62,7 @@ namespace GoodsCheck
             }
         }
 
-        public string Goods_description
+        public string GOODS_DESCRIPTION
         {
             get
             {

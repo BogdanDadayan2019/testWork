@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 
 namespace GoodsCheck.ViewGoods
 {
-
+    
     public partial class ViewCheckGoods : Window
     {
         OracleConnection con = null;
@@ -49,44 +49,39 @@ namespace GoodsCheck.ViewGoods
 
         private void UpdateDataGrid()
         {
-            
+
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = $"SELECT GOODS_NAME, CATEGORY_NAME, GOODS_PRICE FROM GOODS_IN_CHECK WHERE CHECK_ID = {a}";
+            cmd.CommandText = $"SELECT GOODS_NAME, CATEGORY_NAME, GOODS_PRICE FROM goods_in_check WHERE CHECK_ID = {a}";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dr);
             CheckGrid.ItemsSource = dt.DefaultView;
             UpdateSum();
-            //var sum = 0;
-            //foreach (DataRow item in dt.Rows)
-            //{
-            //    var c = item.ItemArray[2];
-            //    sum += Int32.Parse(c.ToString());
-            //}
-            //sumcheck.Text = sum.ToString();
-
             dr.Close();
-                 
+
         }
 
         private void UpdateSum()
         {
 
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM GOODS_IN_CHECK WHERE check_id={a} GROUP BY check_id";
+            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goods_in_check WHERE check_id={a} GROUP BY check_id";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
 
             dt.Load(dr);
-
-            var x = dt.Rows[0].ItemArray[1];
-
-            //CheckGrid.ItemsSource = dt.DefaultView;
-
-            sumcheck.Text = x.ToString();
-
+            if (dt.Rows.Count == 0)
+            {
+              var x = 0;
+              sumcheck.Text = x.ToString();
+            }
+            else
+            {
+                var x = dt.Rows[0].ItemArray[1];
+                sumcheck.Text = x.ToString();
+            }            
             dr.Close();
 
         }
@@ -108,8 +103,8 @@ namespace GoodsCheck.ViewGoods
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {           
-            UpdateDataGrid();                    
+        {
+            UpdateDataGrid();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -119,11 +114,3 @@ namespace GoodsCheck.ViewGoods
     }
 }
 
-//b = dr["GOODS_PRICE"].ToString();
-//foreach (var item in dr["GOODS_PRICE"])
-//{
-
-//}
-
-//idcheck1.Text = dr["CHECK_DATE"].ToString();
-//idcheck2.Text = dr["CHECK_STATUS"].ToString();

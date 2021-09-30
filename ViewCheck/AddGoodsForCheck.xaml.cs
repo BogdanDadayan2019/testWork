@@ -19,19 +19,18 @@ namespace GoodsCheck
 
     public partial class AddGoodsForCheck : Window
     {
-        OracleConnection con = null;
+        OracleConnection con;
         DataRowView dr;
 
         public AddGoodsForCheck(DataRowView dr)
         {
             this.dr = dr;
-            SetConnection();
+
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
-            UpdateLabel();
-            UpdateComboBox();
         }     
 
-        private void Change_BtnClick(object sender, RoutedEventArgs e)
+        private void Add_BtnClick(object sender, RoutedEventArgs e)
         {
             String sql = "INSERT INTO GOODS_IN_CHECK (CHECK_ID, GOODS_NAME, CATEGORY_NAME ,GOODS_PRICE) VALUES(:CHECK_ID, :GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE)";
             this.AUD(sql);
@@ -50,11 +49,9 @@ namespace GoodsCheck
                 if (dr != null)
                 {
                     id_check_txt.Content = dr["CHECK_ID"].ToString();
-
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 String msg = "Выберите чек";
                 MessageBox.Show(msg);
@@ -84,7 +81,7 @@ namespace GoodsCheck
             cmd.CommandText = sql_stmt;
             cmd.CommandType = CommandType.Text;
 
-            msg = "Row Inserted Successfully!";
+            msg = "Успешно!";
             cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Content;
             cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
             cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = typetxt.Text;
@@ -98,25 +95,17 @@ namespace GoodsCheck
                     MessageBox.Show(msg);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                string msg1 = "Некорректный ввод";
+                MessageBox.Show(msg1);
             }
         }
-
-        private void SetConnection()
+       
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            UpdateLabel();
+            UpdateComboBox();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -124,6 +113,5 @@ namespace GoodsCheck
             con.Close();
         }
 
-       
     }
 }

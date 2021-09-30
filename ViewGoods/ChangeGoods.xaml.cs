@@ -20,7 +20,7 @@ namespace GoodsCheck
     public partial class ChangeGoods : Window
     {
 
-        OracleConnection con = null;
+        OracleConnection con;
         DataRowView dr;
         MainWindow.UpdDbGoods updDbGoods;
 
@@ -29,11 +29,11 @@ namespace GoodsCheck
             this.dr = dr;
             this.updDbGoods = updDbGoods;
 
-            SetConnection(); 
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
         }
 
-        private void Change_Click(object sender, RoutedEventArgs e)
+        private void Change_BtnClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -43,15 +43,12 @@ namespace GoodsCheck
             }
             catch (NullReferenceException)
             {
-
                 string msg = "Вы не выбрали товар";
                 MessageBox.Show(msg);
             }
-            
-
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel_BtnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -72,7 +69,6 @@ namespace GoodsCheck
             }
             catch (ArgumentException)
             {
-
                 string msg = "Выберите элемент";
                 MessageBox.Show(msg);
             }
@@ -102,7 +98,7 @@ namespace GoodsCheck
             cmd.CommandText = sql_stmt;
             cmd.CommandType = CommandType.Text;
 
-            msg = "Row Updated Successfully!";
+            msg = "Успешно!";
             cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_txt.Text;
             cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_txt.Text;
             cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 6).Value = price_txt.Text;
@@ -121,29 +117,15 @@ namespace GoodsCheck
             }
             catch (NullReferenceException)
             {
-                msg = "Вы не выбрали позицию";
+                msg = "Некорекктный ввод";
                 MessageBox.Show(msg);
             }
             catch (Exception ex)
             {
-                msg = "Вы не выбрали позицию";
+                msg = "Ошибка!";
                 MessageBox.Show(msg);
             }
             
-        }
-
-        private void SetConnection()
-        {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

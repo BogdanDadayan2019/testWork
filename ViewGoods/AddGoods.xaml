@@ -10,16 +10,17 @@
 
         <Label x:Name="label" Content="Добавить товар" HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Width="99"/>
         <Label x:Name="name_lab" Content="Название:" HorizontalAlignment="Left" Margin="9,51,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="name_typelab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="nametype_lab" Content="Тип товара:" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
         <Label x:Name="price_lab" Content="Цена за 1 шт:" HorizontalAlignment="Left" Margin="9,101,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Height="22"/>
         <Label x:Name="desc_lab" Content="Описание:" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
 
         <TextBox x:Name="name_txt" HorizontalAlignment="Left" Margin="91,51,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" FontFamily="Bahnschrift" Height="20"/>
         <TextBox x:Name="price_txt" HorizontalAlignment="Left" Margin="91,106,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" FontFamily="Bahnschrift" Height="17"/>
-        <Button x:Name="add_btn" Content="Добавить" HorizontalAlignment="Left" Margin="91,179,0,0" VerticalAlignment="Top" Click="Add_Click" Width="143"/>
         <TextBox x:Name="desc_txt" HorizontalAlignment="Left" Margin="91,128,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="143" FontFamily="Bahnschrift" Height="47"/>
         <ComboBox x:Name="type_txt" HorizontalAlignment="Left" Margin="91,79,0,0" VerticalAlignment="Top" Width="144" FontFamily="Bahnschrift"/>
-        <Button x:Name="cancel_btn" Content="Отменить" HorizontalAlignment="Left" Margin="91,204,0,0" VerticalAlignment="Top" Click="Cancel_Click" Width="143"/>
+
+        <Button x:Name="add_btn" Content="Добавить" HorizontalAlignment="Left" Margin="91,179,0,0" VerticalAlignment="Top" Click="Add_BtnClick" Width="143"/>
+        <Button x:Name="cancel_btn" Content="Отменить" HorizontalAlignment="Left" Margin="91,204,0,0" VerticalAlignment="Top" Click="Cancel_BtnClick" Width="143"/>
 
     </Grid>
 </Window>

@@ -20,25 +20,40 @@ namespace GoodsCheck.ViewCheck
     public partial class ChangeCheck : Window
     {
 
-        OracleConnection con = null;
+        OracleConnection con;
         MainWindow.UpdDbCheck updDbCheck;
+        DataRowView dr;
 
         public ChangeCheck(MainWindow.UpdDbCheck updCheck, DataRowView dr)
         {
             this.updDbCheck = updCheck;
+            this.dr = dr;
 
-            SetConnection();
-            InitializeComponent();
+            con = ConnectionDB.SetConnection();
+            InitializeComponent();        
+        }
 
+        private void Сhange_BtnClick(object sender, RoutedEventArgs e)
+        {
+            String sql = "UPDATE GOODSCHECK2 SET CHECK_DATE = :CHECK_DATE, CHECK_STATUS = :CHECK_STATUS WHERE CHECK_ID = :CHECK_ID";
+            AUD(sql);
+            updDbCheck();
+        }
+
+        private void Cancel_BtnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void UpdateTextBox()
+        {
             try
             {
-
                 if (dr != null)
                 {
                     nametxt.Text = dr["CHECK_ID"].ToString();
-                    timetxt.Text = dr["CHECK_DATE"].ToString();
+                    dataPicker.Text = dr["CHECK_DATE"].ToString();
                     statustxt.Text = dr["CHECK_STATUS"].ToString();
-                    
                 }
             }
             catch (Exception)
@@ -46,20 +61,6 @@ namespace GoodsCheck.ViewCheck
                 String msg = "Выберите чек";
                 MessageBox.Show(msg);
             }
-
-        }
-
-
-        private void Сhange_Click(object sender, RoutedEventArgs e)
-        {
-            String sql = "UPDATE GOODSCHECK2 SET CHECK_DATE = :CHECK_DATE, CHECK_STATUS = :CHECK_STATUS WHERE CHECK_ID = :CHECK_ID";
-            AUD(sql);
-            updDbCheck();
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void AUD(String sql_stmt)
@@ -69,9 +70,9 @@ namespace GoodsCheck.ViewCheck
             cmd.CommandText = sql_stmt;
             cmd.CommandType = CommandType.Text;
 
-            msg = "Row Updated Successfully!";
+            msg = "Успешно!";
             
-            cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 25).Value = timetxt.SelectedDate;
+            cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 25).Value = dataPicker.SelectedDate;
             cmd.Parameters.Add("CHECK_STATUS", OracleDbType.Varchar2, 25).Value = statustxt.Text;
             cmd.Parameters.Add("CHECK_ID", OracleDbType.Int32, 6).Value = nametxt.Text;
 
@@ -80,34 +81,25 @@ namespace GoodsCheck.ViewCheck
                 int n = cmd.ExecuteNonQuery();
                 if (n > 0)
                 {
-                     
+                    MessageBox.Show(msg);
                     updDbCheck();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show(msg);
+                
             }
         }
 
-        private void SetConnection()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            UpdateTextBox();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             con.Close();
         }
-
+      
     }
 }

@@ -19,21 +19,21 @@ namespace GoodsCheck
 
     public partial class CheckWindow : Window
     {
-        OracleConnection con = null;
+        OracleConnection con;
         private MainWindow.UpdDbCheck updCheck;
       
         public CheckWindow(MainWindow.UpdDbCheck updCheck)
         {
             this.updCheck = updCheck;
 
-            SetConnection();
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
         }
      
         private void Add_BtnClick(object sender, RoutedEventArgs e)
         {
             String sql = "INSERT INTO GOODSCHECK2 (CHECK_ID, CHECK_DATE, CHECK_STATUS) VALUES(:CHECK_ID, :CHECK_DATE, :CHECK_STATUS)";
-            this.AUD(sql);
+            AUD(sql);
             updCheck();
         }
 
@@ -49,7 +49,7 @@ namespace GoodsCheck
             cmd.CommandText = sql_stmt;
             cmd.CommandType = CommandType.Text;
 
-            msg = "Row Inserted Successfully!";
+            msg = "Успешно!";
             cmd.Parameters.Add("CHECK_ID", OracleDbType.Varchar2, 25).Value = id_check_txt.Text;
             cmd.Parameters.Add("CHECK_DATE", OracleDbType.Date, 7).Value = time_check_txt.SelectedDate;
             cmd.Parameters.Add("CHECK_STATUS", OracleDbType.Varchar2, 6).Value = status_check_txt.Text;
@@ -62,24 +62,10 @@ namespace GoodsCheck
                     MessageBox.Show(msg);
                 }
             }
-            catch (Exception)
+            catch (OracleException)
             {
-
-                throw;
-            }
-        }
-
-        private void SetConnection()
-        {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
+                String msg1 = "Некорекктный ввод";
+                MessageBox.Show(msg1);
             }
         }
 

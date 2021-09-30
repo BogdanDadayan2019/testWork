@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoodsCheck.ViewCheck"
         mc:Ignorable="d"
-        Title="FilterCheck" Height="363" Width="480" Loaded="Window_Loaded">
+        Title="FilterCheck" Height="363" Width="480" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" Margin="0,114,0,0" >
+        <DataGrid x:Name="filterDataGrid" AutoGenerateColumns="False" Margin="0,114,0,0" >
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding CHECK_ID}" Header="Номер чека"/>
@@ -18,16 +18,18 @@
         </DataGrid>
 
 
-        <Label x:Name="label" Content="Фильтр чеков" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="label2" Content="Номер чека:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy" Content="Дата чека:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="59" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy1" Content="Сумма счёта от:" HorizontalAlignment="Left" Margin="9,88,0,0" VerticalAlignment="Top" Width="83" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy2" Content="до" HorizontalAlignment="Left" Margin="158,88,0,0" VerticalAlignment="Top" Width="27" Height="22" FontSize="10"/>
-        <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="81,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" FontSize="10" Height="26"/>
-        <TextBox x:Name="pricetxt1" HorizontalAlignment="Left" Margin="92,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
-        <TextBox x:Name="pricetxt2" HorizontalAlignment="Left" Margin="185,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
-        <Button x:Name="button" Content="Фильтр" HorizontalAlignment="Left" Margin="240,52,0,0" VerticalAlignment="Top" Width="86" Click="Filtr_BtnClick"/>
+        <Label x:Name="label1" Content="Фильтр чеков" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
+        <Label x:Name="check_id_lab" Content="Номер чека:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
+        <Label x:Name="date_check_lab" Content="Дата чека:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="59" Height="22" FontSize="10"/>
+        <Label x:Name="price_min_lab" Content="Сумма счёта от:" HorizontalAlignment="Left" Margin="9,88,0,0" VerticalAlignment="Top" Width="83" Height="22" FontSize="10"/>
+        <Label x:Name="price_max_lab" Content="до" HorizontalAlignment="Left" Margin="158,88,0,0" VerticalAlignment="Top" Width="27" Height="22" FontSize="10"/>
+       
+        <TextBox x:Name="name_txt" HorizontalAlignment="Left" Margin="81,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" FontSize="10" Height="26"/>
+        <TextBox x:Name="price_txt1" HorizontalAlignment="Left" Margin="92,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
+        <TextBox x:Name="price_txt2" HorizontalAlignment="Left" Margin="185,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61" FontSize="10" Height="16"/>
         <DatePicker x:Name="datePicker" HorizontalAlignment="Left" Margin="81,61,0,0" VerticalAlignment="Top" Height="26" Width="126"/>
+        <Button x:Name="filtrBtn" Content="Фильтр" HorizontalAlignment="Left" Margin="240,52,0,0" VerticalAlignment="Top" Width="86" Click="Filtr_BtnClick"/>
+        
 
     </Grid>
 </Window>

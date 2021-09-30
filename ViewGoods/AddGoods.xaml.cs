@@ -19,54 +19,27 @@ namespace GoodsCheck.ViewGoods
 
     public partial class AddGoods : Window
     {
-        OracleConnection con = null;
-        MainWindow.UpdDbCheck upd1;
+        OracleConnection con;
+        MainWindow.UpdDbCheck UpdateDbGoods;
 
         public AddGoods(MainWindow.UpdDbCheck upd1)
         {
-            this.upd1 = upd1;
+            this.UpdateDbGoods = upd1;
 
-            SetConnection();
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
         }
     
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void Add_BtnClick(object sender, RoutedEventArgs e)
         {
             String sql = "INSERT INTO GOODS (GOODS_NAME, CATEGORY_NAME, GOODS_PRICE, GOODS_DESCRIPTION) VALUES(:GOODS_NAME, :CATEGORY_NAME, :GOODS_PRICE, :GOODS_DESCRIPTION)";
             this.AUD(sql);
-            upd1();
+            UpdateDbGoods();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel_BtnClick(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void AUD(String sql_stmt)
-        {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = sql_stmt;
-            cmd.CommandType = CommandType.Text;
-
-            msg = "Row Inserted Successfully!";
-            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_txt.Text;
-            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_txt.Text;
-            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Varchar2, 6).Value = price_txt.Text;
-            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = desc_txt.Text;
-
-            try
-            {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show(msg);                
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
         private void UpdateComboBox()
@@ -84,17 +57,31 @@ namespace GoodsCheck.ViewGoods
             cmd.ExecuteNonQuery();
         }
 
-        private void SetConnection()
+        private void AUD(String sql_stmt)
         {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
+            String msg = "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = sql_stmt;
+            cmd.CommandType = CommandType.Text;
+
+            msg = "Успешно!";
+            cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = name_txt.Text;
+            cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = type_txt.Text;
+            cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Varchar2, 6).Value = price_txt.Text;
+            cmd.Parameters.Add("GOODS_DESCRIPTION", OracleDbType.Varchar2, 25).Value = desc_txt.Text;
+
             try
             {
-                con.Open();
+                int n = cmd.ExecuteNonQuery();
+                if (n > 0)
+                {
+                    MessageBox.Show(msg);                
+                }
             }
             catch (Exception)
             {
-
-                throw;
+                String msg1 = "Некорекктный ввод";
+                MessageBox.Show(msg1);
             }
         }
 

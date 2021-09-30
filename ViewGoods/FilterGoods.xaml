@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="FilterGoods" Height="363" Width="480" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" Margin="0,114,0,0" >
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Margin="0,114,0,0" >
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
@@ -17,16 +17,16 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
         <Label x:Name="label" Content="Фильтр товаров" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift"/>
-        <Label x:Name="label2" Content="Название товара:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy" Content="Категория товара:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy1" Content="Цена от:" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="50" Height="22" FontSize="10"/>
-        <Label x:Name="label2_Copy2" Content="цена до:" HorizontalAlignment="Left" Margin="94,78,0,0" VerticalAlignment="Top" Width="50" Height="22" FontSize="10"/>
+        <Label x:Name="name_lab" Content="Название товара:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
+        <Label x:Name="type_lab" Content="Категория товара:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="108" Height="22" FontSize="10"/>
+        <Label x:Name="price1_lab" Content="Цена от:" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="50" Height="22" FontSize="10"/>
+        <Label x:Name="price2_lab" Content="цена до:" HorizontalAlignment="Left" Margin="94,78,0,0" VerticalAlignment="Top" Width="50" Height="22" FontSize="10"/>
+       
         <TextBox x:Name="nametxt" HorizontalAlignment="Left" Margin="100,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="10"/>
         <TextBox x:Name="categorynametxt" HorizontalAlignment="Left" Margin="104,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="10"/>
         <TextBox x:Name="pricetxt1" HorizontalAlignment="Left" Margin="59,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="10"/>
-        <TextBox x:Name="pricetxtx2" HorizontalAlignment="Left" Margin="144,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="10"/>
+        <TextBox x:Name="pricetxt2" HorizontalAlignment="Left" Margin="144,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="10"/>
         <Button x:Name="button" Content="Фильтр" HorizontalAlignment="Left" Margin="240,80,0,0" VerticalAlignment="Top" Width="86" Click="Filter_BtnClick"/>
 
     </Grid>

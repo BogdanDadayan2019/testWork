@@ -10,8 +10,9 @@ namespace GoodsCheck
     {
         private string _check_id;
         private DateTime _check_date;
+        private string _check_status;
 
-        public string Check_id
+        public string CHECK_ID
         {
             get
             {
@@ -23,7 +24,7 @@ namespace GoodsCheck
             }
         }
 
-        public DateTime Check_date
+        public DateTime CHECK_DATE
         {
             get
             {
@@ -32,6 +33,18 @@ namespace GoodsCheck
             set
             {
                 _check_date = value;
+            }
+        }
+
+        public string CHECK_STATUS
+        {
+            get
+            {
+                return _check_status;
+            }
+            set
+            {
+                _check_status = value;
             }
         }
 

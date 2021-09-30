@@ -20,86 +20,24 @@ namespace GoodsCheck.ViewCheck
 
     public partial class FilterCheck : Window
     {
-        OracleConnection con = null;
-        DataRowView dr;
-        string a;
 
+        OracleConnection con;
+        DataRowView dr;
+            
         public FilterCheck(DataRowView dr)
         {
             this.dr = dr;
-
-            SetConnection();
+            
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
-        }
-
-        private void UpdateDataGrid()
-        {
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CHECK_ID, CHECK_DATE, CHECK_STATUS FROM GOODSCHECK2";
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-            dataGrid.ItemsSource = dt.DefaultView;
-            dr.Close();
-        }
-
-        private void SetConnection()
-        {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private void UpdateLabel()
-        {
-            try
-            {
-                if (dr != null)
-                {
-                    a = dr["CHECK_ID"].ToString();
-                    //label_idcheck.Content = a.ToString();
-
-                }
-            }
-            catch { }
-        }
-
-
-        private void UpdateSum()
-        {
-
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = $"SELECT check_id , SUM(goods_price) FROM goodscheck2 WHERE check_id={a} GROUP BY check_id";
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-
-            dt.Load(dr);
-
-            var x = dt.Rows[0].ItemArray[1];
-
-            dataGrid.ItemsSource = dt.DefaultView;
-
-            //sumcheck.Text = x.ToString();
-
-            dr.Close();
-
         }
 
         private void Filtr_BtnClick(object sender, RoutedEventArgs e)
         {
-             UpdateDataGrid2();
+             UpdateDataGrid();
         }
 
-        private void UpdateDataGrid2()
+        private void UpdateDataGrid()
         {
             try
             {
@@ -111,87 +49,64 @@ namespace GoodsCheck.ViewCheck
 
                 OracleParameter output = cmd.Parameters.Add("l_cursor", OracleDbType.RefCursor);
 
-                cmd.Parameters.Add("g_id", Convert.ToString(nametxt.Text));
+                cmd.Parameters.Add("c_id", Convert.ToString(name_txt.Text));
                 if (datePicker.Text == "")
                 {
-                    cmd.Parameters.Add("g_date", null);
+                    cmd.Parameters.Add("c_date", null);
                 }
-                else { cmd.Parameters.Add("g_date", Convert.ToDateTime(datePicker.Text)); }
+                else { cmd.Parameters.Add("c_date", Convert.ToDateTime(datePicker.Text)); }
 
-                if (pricetxt1.Text == "")
+                if (price_txt1.Text == "")
                 {
-                    cmd.Parameters.Add("g_price1", "0");
+                    cmd.Parameters.Add("c_price_min", "0");
                 }
-                else { cmd.Parameters.Add("g_price1", Convert.ToString(pricetxt1.Text)); }
+                else { cmd.Parameters.Add("c_price_min", Convert.ToString(price_txt1.Text)); }
 
-                if (pricetxt2.Text == "")
+                if (price_txt2.Text == "")
                 {
-                    cmd.Parameters.Add("g_price2", "2147483647");
+                    cmd.Parameters.Add("c_price_max", "2147483647");
                 }
-                else { cmd.Parameters.Add("g_price2", Convert.ToString(pricetxt2.Text)); }
+                else { cmd.Parameters.Add("c_price_max", Convert.ToString(price_txt2.Text)); }
 
                 output.Direction = ParameterDirection.ReturnValue;
 
                 cmd.ExecuteNonQuery();
 
                 OracleDataReader reader = ((OracleRefCursor)output.Value).GetDataReader();
-                int i = 5;
 
                 while (reader.Read())
                 {
-                    i++;
 
                     Check lcheck = new Check();
-                    lcheck.Check_id = reader.GetString(0);
 
-                    lcheck.Check_date = reader.GetDateTime(1);
-
+                    lcheck.CHECK_ID = reader.GetString(0);
+                    lcheck.CHECK_DATE = reader.GetDateTime(1);
+                    lcheck.CHECK_STATUS = reader.GetString(2);
 
                     check.Add(lcheck);
 
                 }
 
-                dataGrid.ItemsSource = check.ToList();
+                filterDataGrid.ItemsSource = check.ToList();
 
             }
-            catch (Exception)
+            catch (OracleException)
             {
 
-                throw;
-            }
-        }
-
-        private void AUD()
-        {
-            String msg = "";
-            OracleCommand cmd = con.CreateCommand();
-
-            cmd.CommandType = CommandType.Text;
-
-            OracleDataReader dr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-            dataGrid.ItemsSource = dt.DefaultView;
-            dr.Close();
-
-            try
-            {
-                int n = cmd.ExecuteNonQuery();
-                if (n > 0)
-                {
-                    MessageBox.Show(msg);
-                    //  this.UpdateDataGrid();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                String msg = "Некорректный ввод";
+                MessageBox.Show(msg);
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //UpdateDataGrid();
+           
+            UpdateDataGrid();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            con.Close();
         }
     }
 }

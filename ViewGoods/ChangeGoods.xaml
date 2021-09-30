@@ -20,8 +20,8 @@
         <TextBox x:Name="id_txt" HorizontalAlignment="Left" Margin="8,188,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="57" IsEnabled="False" Visibility="Hidden"/>
         <ComboBox x:Name="type_txt" HorizontalAlignment="Left" Margin="95,79,0,0" VerticalAlignment="Top" Width="141" Height="19" />
 
-        <Button x:Name="cancel_btn" Content="Изменить" HorizontalAlignment="Left" Margin="91,194,0,0" VerticalAlignment="Top" Click="Change_Click" Width="145"/>
-        <Button x:Name="change_btn" Content="Отмена" HorizontalAlignment="Right" Margin="0,217,37,47" Click="Cancel_Click" Width="145"/>
+        <Button x:Name="cancel_btn" Content="Изменить" HorizontalAlignment="Left" Margin="91,194,0,0" VerticalAlignment="Top" Click="Change_BtnClick" Width="145"/>
+        <Button x:Name="change_btn" Content="Отмена" HorizontalAlignment="Right" Margin="0,217,37,47" Click="Cancel_BtnClick" Width="145"/>
 
 
     </Grid>
