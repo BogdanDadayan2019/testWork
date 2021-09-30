@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,11 +17,11 @@ using System.Windows.Shapes;
 
 namespace GoodsCheck.ViewCheck
 {
-    
+
     public partial class FilterCheck : Window
     {
         OracleConnection con = null;
-    
+
         public FilterCheck()
         {
             SetConnection();
@@ -55,9 +56,55 @@ namespace GoodsCheck.ViewCheck
 
         private void Filtr_BtnClick(object sender, RoutedEventArgs e)
         {
-            //String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name and goods_price > :goods_price and goods_price < :goods_price and category_name = :category_name) "; // имя, категория прайс от и до
+                UpdateDataGrid2();
+        }
 
-            AUD();
+        private void UpdateDataGrid2()
+        {
+            try
+            {
+                OracleCommand cmd = new OracleCommand("F_FILTER_CHECK", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                List<Check> check = new List<Check>();
+
+                OracleParameter output = cmd.Parameters.Add("l_cursor", OracleDbType.RefCursor);
+
+                cmd.Parameters.Add("c_number", Convert.ToString(nametxt.Text));            
+                cmd.Parameters.Add("c_date", Convert.ToDateTime(datePicker.Text));
+                
+
+
+                output.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                OracleDataReader reader = ((OracleRefCursor)output.Value).GetDataReader();
+                int i = 5;
+
+                while (reader.Read())
+                {
+                    i++;
+
+                    Check lcheck = new Check();
+                    lcheck.Check_id = reader.GetString(0);
+
+                    lcheck.Check_date = reader.GetDateTime(1);
+
+
+                    check.Add(lcheck);
+
+                }
+
+                dataGrid.ItemsSource = check.ToList();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void AUD()
@@ -65,26 +112,7 @@ namespace GoodsCheck.ViewCheck
             String msg = "";
             OracleCommand cmd = con.CreateCommand();
 
-
-
-            //if (String.IsNullOrWhiteSpace(pricetxt1.Text) & String.IsNullOrWhiteSpace(pricetxtx2.Text) & String.IsNullOrWhiteSpace(categorynametxt.Text))
-            //{
-            //    ////cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
-            //    ////String sql = "select * from goods where goods_id in (select goods_id from goods where goods_name = :goods_name) "; // имя
-            //    ////cmd.CommandText = sql;
-
-            //}
-            //else if (true)
-            //{
-
-            //}
-
             cmd.CommandType = CommandType.Text;
-            //msg = "Row Updated Successfully!";
-            //cmd.Parameters.Add("GOODS_NAME", OracleDbType.Varchar2, 25).Value = nametxt.Text;
-            //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 25).Value = pricetxt1.Text;
-            //cmd.Parameters.Add("GOODS_PRICE", OracleDbType.Int32, 25).Value = pricetxtx2.Text;
-            //cmd.Parameters.Add("CATEGORY_NAME", OracleDbType.Varchar2, 25).Value = categorynametxt.Text;
 
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
@@ -109,7 +137,7 @@ namespace GoodsCheck.ViewCheck
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            UpdateDataGrid();
+            //UpdateDataGrid();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using GoodsCheck.ViewCheck;
 using GoodsCheck.ViewGoods;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -197,15 +198,15 @@ namespace GoodsCheck
             CheckUpdateDataGrid();
         }
 
-        private void Filtr_BtnClick(object sender, RoutedEventArgs e)
+        private void Filtr_Check_BtnClick(object sender, RoutedEventArgs e)
         {
-            FilterGoods filter = new FilterGoods();
+            FilterCheck filter = new FilterCheck();
             filter.Show();
         }
 
-        private void Filter_Check_BtnClick(object sender, RoutedEventArgs e)
+        private void Filtr_Goods_BtnClick(object sender, RoutedEventArgs e)
         {
-            FilterCheck filter = new FilterCheck();
+            FilterGoods filter = new FilterGoods();
             filter.Show();
         }
 
@@ -232,6 +233,8 @@ namespace GoodsCheck
         {
             con.Close();
         }
+
+
     }
 }
 

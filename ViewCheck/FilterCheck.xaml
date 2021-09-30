@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="FilterCheck" Height="363" Width="480" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Margin="0,114,0,0" >
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" Margin="0,114,0,0" >
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding CHECK_ID}" Header="Номер чека"/>

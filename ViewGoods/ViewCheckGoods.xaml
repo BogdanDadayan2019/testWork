@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ViewCheckGoods" Height="293" Width="355" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <DataGrid x:Name="CheckGrid"  AutoGenerateColumns="False" FontFamily="Bahnschrift" IsReadOnly="True" Margin="0,44,0,0">
+        <DataGrid x:Name="CheckGrid"  AutoGenerateColumns="True" FontFamily="Bahnschrift" IsReadOnly="True" Margin="0,44,0,0">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Binding="{Binding GOODS_NAME}" Header="Наименование товара"/>
