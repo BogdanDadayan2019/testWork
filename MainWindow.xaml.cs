@@ -122,8 +122,7 @@ namespace GoodsCheck
                     cmd.Parameters.Add("GOODS_ID", OracleDbType.Int32, 6).Value = id_goods_txt.Text;
                     break;
                 case 1:
-                    msg = "Успешно удалено!";
-                        cmd.Parameters.Add("CHECK_ID", OracleDbType.Int32, 6).Value = id_check_txt.Text;
+                    cmd.Parameters.Add("CHECK_ID", OracleDbType.Int32, 6).Value = id_check_txt.Text;
                     CheckUpdateDataGrid();
                     break;
             }
@@ -188,6 +187,8 @@ namespace GoodsCheck
 
             String sql = "DELETE FROM GOODSCHECK2 WHERE CHECK_ID = :CHECK_ID";
             AUD(sql, 1);
+            String sql1 = "DELETE FROM GOODS_IN_CHECK WHERE CHECK_ID = :CHECK_ID";
+            AUD(sql1, 1);
             CheckUpdateDataGrid();
         }
 

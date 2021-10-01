@@ -19,7 +19,7 @@ namespace GoodsCheck.ViewGoods
     
     public partial class ViewCheckGoods : Window
     {
-        OracleConnection con = null;
+        OracleConnection con;
         DataRowView dr;
         string a;
 
@@ -27,7 +27,7 @@ namespace GoodsCheck.ViewGoods
         {
             this.dr = dr;
 
-            SetConnection();
+            con = ConnectionDB.SetConnection();
             InitializeComponent();
             UpdateLabel();
 
@@ -85,22 +85,6 @@ namespace GoodsCheck.ViewGoods
             dr.Close();
 
         }
-
-
-        private void SetConnection()
-        {
-            con = new OracleConnection("Data Source=XE;User Id=SYSTEM;Password=name23;");
-            try
-            {
-                con.Open();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
