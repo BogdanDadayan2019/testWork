@@ -42,7 +42,7 @@ namespace GoodsCheck
         private void GoodsUpdateDataGrid()
         {
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT GOODS_ID, CATEGORY_ID, CATEGORY_NAME, GOODS_NAME, GOODS_PRICE, GOODS_DESCRIPTION FROM GOODS";
+            cmd.CommandText = "SELECT GOODS_ID, CATEGORY_NAME, GOODS_NAME, GOODS_PRICE, GOODS_DESCRIPTION FROM GOODS";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
